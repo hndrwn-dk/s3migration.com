@@ -131,18 +131,7 @@ Native desktop applications with GUI interface for easy migration management.
 3. **Follow the setup wizard**
 4. **Launch from Start Menu** or Desktop shortcut
 
-#### Alternative Installation Methods
 
-```powershell
-# Using Chocolatey
-choco install s3-migration-scheduler
-
-# Using Winget
-winget install hndrwn.S3MigrationScheduler
-
-# Portable version (no installation required)
-# Download the ZIP file and extract to any folder
-```
 
 #### Configuration Location
 - **Settings**: `%APPDATA%\S3MigrationScheduler\config.yml`
