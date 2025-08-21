@@ -36,7 +36,6 @@
         detectPlatform: () => {
             const userAgent = navigator.userAgent.toLowerCase();
             if (userAgent.includes('win')) return 'windows';
-            if (userAgent.includes('mac')) return 'macos';
             if (userAgent.includes('linux')) return 'linux';
             return 'unknown';
         },
@@ -221,7 +220,6 @@
 
             const platformNames = {
                 windows: 'Windows',
-                macos: 'macOS',
                 linux: 'Linux'
             };
 
@@ -269,8 +267,7 @@
 
         getPlatformAssets(assets, platform) {
             const patterns = {
-                windows: /windows|win32|win64|\.msi|\.exe/i,
-                macos: /macos|darwin|osx|\.dmg/i,
+                windows: /windows|win.*x64|win64|\.msi|\.exe/i,
                 linux: /linux|\.deb|\.rpm|\.appimage|\.tar\.gz/i
             };
 
@@ -454,8 +451,7 @@
         updateDownloadLinks(assets) {
             // Update platform-specific download links
             const platformMappings = {
-                'windows': ['windows', 'win32', 'win64', '.msi', '.exe'],
-                'macos': ['macos', 'darwin', 'osx', '.dmg'],
+                'windows': ['windows', 'win64', 'x64', '.msi', '.exe'],
                 'linux': ['linux', '.deb', '.rpm', '.appimage', '.tar.gz']
             };
 

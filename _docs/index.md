@@ -2,6 +2,7 @@
 layout: docs
 title: Documentation
 description: Complete documentation for S3 Migration Scheduler - installation, configuration, and usage guides.
+permalink: /docs/
 ---
 
 # S3 Migration Scheduler Documentation

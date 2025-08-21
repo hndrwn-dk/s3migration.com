@@ -30,7 +30,6 @@ docker run -d \
 
 ### Desktop Application
 - **Windows**: Start Menu → S3 Migration Scheduler
-- **macOS**: Applications → S3 Migration Scheduler
 - **Linux**: Applications menu or run `s3-migration-scheduler`
 
 ### Command Line

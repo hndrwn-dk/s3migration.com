@@ -1,7 +1,7 @@
 ---
 layout: docs
 title: Installation
-description: Install S3 Migration Scheduler on your platform - Docker, Windows, macOS, Linux, or build from source.
+description: Install S3 Migration Scheduler on your platform - Docker, Windows, Linux, or build from source.
 ---
 
 # Installation Guide
@@ -149,35 +149,7 @@ winget install hndrwn.S3MigrationScheduler
 - **Logs**: `%APPDATA%\S3MigrationScheduler\logs\`
 - **Data**: `%APPDATA%\S3MigrationScheduler\data\`
 
-### macOS {#macos}
 
-#### System Requirements
-- macOS 11.0 (Big Sur) or later
-- Intel or Apple Silicon Mac
-- At least 4GB RAM
-- 500MB free disk space
-
-#### Installation Steps
-
-1. **Download the DMG** from the [Downloads page]({{ '/downloads/' | relative_url }})
-2. **Open the DMG** and drag the app to Applications folder
-3. **Right-click the app** and select "Open" (first launch only)
-4. **Grant necessary permissions** when prompted
-
-#### Alternative Installation Methods
-
-```bash
-# Using Homebrew
-brew install --cask s3-migration-scheduler
-
-# Using MacPorts
-sudo port install s3-migration-scheduler
-```
-
-#### Configuration Location
-- **Settings**: `~/Library/Application Support/S3MigrationScheduler/config.yml`
-- **Logs**: `~/Library/Logs/S3MigrationScheduler/`
-- **Data**: `~/Library/Application Support/S3MigrationScheduler/data/`
 
 ### Linux {#linux}
 
@@ -301,7 +273,7 @@ make build
 # Build for specific platform
 make build-linux
 make build-windows
-make build-darwin
+
 
 # Build Docker image
 make docker-build
@@ -322,7 +294,7 @@ make build-all
 # Build for specific platforms
 GOOS=linux GOARCH=amd64 go build -o bin/s3-migration-scheduler-linux-amd64 ./cmd/server
 GOOS=windows GOARCH=amd64 go build -o bin/s3-migration-scheduler-windows-amd64.exe ./cmd/server
-GOOS=darwin GOARCH=amd64 go build -o bin/s3-migration-scheduler-darwin-amd64 ./cmd/server
+
 ```
 
 ### Development Setup
@@ -376,7 +348,7 @@ curl http://localhost:8080/health
 
 ### Common Issues
 
-#### Permission Denied (Linux/macOS)
+#### Permission Denied (Linux)
 ```bash
 # Make the binary executable
 chmod +x s3-migration-scheduler
