@@ -68,21 +68,16 @@ docker run -v $(pwd)/config.yml:/app/config.yml \
 s3-migration-scheduler migrate --config config.yml
 ```
 
-## Screenshots
+## User Interface
 
-Here are some screenshots of the S3 Migration Scheduler interface:
+S3 Migration Scheduler provides an intuitive web-based interface for managing your migrations. The interface includes:
 
-### Main Dashboard
-![Main Dashboard]({{ '/assets/images/docs/dashboard.png' | relative_url }})
-*The main dashboard showing migration progress and system status*
+- **Dashboard** - Overview of all migrations and system status
+- **Migration Setup** - Easy-to-use forms for configuring new migrations  
+- **Progress Monitoring** - Real-time tracking with detailed metrics and logs
+- **Settings** - Configuration management and preferences
 
-### Migration Setup
-![Migration Setup]({{ '/assets/images/docs/setup.png' | relative_url }})
-*Configuration interface for setting up new migrations*
-
-### Progress Monitoring
-![Progress Monitoring]({{ '/assets/images/docs/progress.png' | relative_url }})
-*Real-time progress tracking with detailed metrics*
+*Screenshots will be added once the UI is finalized.*
 
 ## Key Features
 
