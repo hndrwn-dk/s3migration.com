@@ -25,12 +25,34 @@ permalink: /downloads/
         </div>
     </div>
 
-
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <div class="container">
+            <h2>Choose Your Platform</h2>
+            <div class="nav-buttons">
+                <a href="#docker" class="nav-btn">
+                    <span class="nav-icon">🐳</span>
+                    <strong>Docker</strong>
+                    <small>Recommended</small>
+                </a>
+                <a href="#windows" class="nav-btn">
+                    <span class="nav-icon">🪟</span>
+                    <strong>Windows</strong>
+                    <small>Desktop App</small>
+                </a>
+                <a href="#linux" class="nav-btn">
+                    <span class="nav-icon">🐧</span>
+                    <strong>Linux</strong>
+                    <small>Desktop App</small>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- Download Options -->
     <div class="download-options">
         <!-- Docker -->
-        <div class="download-section">
+        <div class="download-section" id="docker">
             <div class="section-header">
                 <div class="section-icon">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
@@ -98,7 +120,7 @@ services:
         </div>
 
         <!-- Desktop Applications -->
-        <div class="download-section">
+        <div class="download-section" id="desktop">
             <div class="section-header">
                 <div class="section-icon">💻</div>
                 <div>
@@ -111,7 +133,7 @@ services:
             
             <div class="platform-grid">
                 <!-- Windows -->
-                <div class="platform-card">
+                <div class="platform-card" id="windows">
                     <div class="platform-header">
                         <div class="platform-icon">🪟</div>
                         <h4>Windows</h4>
@@ -140,7 +162,7 @@ services:
 
 
                 <!-- Linux -->
-                <div class="platform-card">
+                <div class="platform-card" id="linux">
                     <div class="platform-header">
                         <div class="platform-icon">🐧</div>
                         <h4>Linux</h4>

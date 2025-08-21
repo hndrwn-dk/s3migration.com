@@ -1108,6 +1108,66 @@ a {
   }
 }
 
+// Quick navigation styles
+.quick-nav {
+  background-color: var(--bg-secondary);
+  padding: 2rem 0;
+  margin-bottom: 3rem;
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+  }
+  
+  .nav-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  }
+  
+  .nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    min-width: 120px;
+    
+    &:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    strong {
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    small {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+  }
+}
+
 // Downloads page specific styles
 .downloads-page {
   .platform-detection {
