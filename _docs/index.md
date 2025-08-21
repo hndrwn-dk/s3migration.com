@@ -19,7 +19,7 @@ Ready to get started? Follow these steps:
 
 ## What is S3 Migration Scheduler?
 
-S3 Migration Scheduler is an enterprise-grade, open-source tool designed to simplify and automate S3 data migrations. Whether you're moving data between AWS regions, migrating to a different cloud provider, or creating scheduled backups, our tool provides:
+S3 Migration Scheduler is an enterprise-grade, open-source tool designed to simplify and automate S3 data migrations. Whether you're moving data between AWS regions, S3 compatible on-premises to different public cloud provider, vice versa, or creating scheduled backups, our tool provides:
 
 - **Real-time Monitoring** - Track progress with detailed metrics and logs
 - **Data Reconciliation** - Verify migration integrity automatically
@@ -28,47 +28,13 @@ S3 Migration Scheduler is an enterprise-grade, open-source tool designed to simp
 
 ## Getting Started
 
-### 1. Choose Your Installation Method
+### Choose Your Installation Method
 
 - **[Docker]({{ '/docs/installation/#docker' | relative_url }})** (Recommended) - Get started instantly
 - **[Desktop App]({{ '/docs/installation/#desktop' | relative_url }})** - Native GUI applications
 - **[Build from Source]({{ '/docs/installation/#source' | relative_url }})** - For developers and contributors
 
-### 2. Configure Your Migration
-
-Create a simple configuration file:
-```yaml
-# config.yml
-source:
-  endpoint: "https://s3.amazonaws.com"
-  bucket: "source-bucket"
-  access_key: "your-access-key"
-  secret_key: "your-secret-key"
-
-destination:
-  endpoint: "https://s3.amazonaws.com"
-  bucket: "destination-bucket"
-  access_key: "your-access-key"
-  secret_key: "your-secret-key"
-
-options:
-  workers: 4
-  chunk_size: "64MB"
-  verify_checksums: true
-```
-
-### 3. Run Your First Migration
-
-```bash
-# Using Docker
-docker run -v $(pwd)/config.yml:/app/config.yml \
-  hndrwn/s3-migration-scheduler migrate --config /app/config.yml
-
-# Using CLI
-s3-migration-scheduler migrate --config config.yml
-```
-
-## Screenshots
+### Screenshots
 
 ### Main Dashboard
 ![Main Dashboard]({{ '/assets/images/docs/dashboard.png' | relative_url }})
@@ -96,19 +62,37 @@ s3-migration-scheduler migrate --config config.yml
 
 ## Key Features
 
-### Real-time Monitoring
-Track your migrations with comprehensive metrics:
-- Transfer progress and speed
-- File-level status tracking
-- Error reporting and retry logic
-- Performance metrics and statistics
+### Migration Management
+- **Enhanced Bucket Selection** - **🆕 v1.1.0** Optimized for large-scale deployments
+- **Source/Destination Configuration** - Support for any S3-compatible storage
+- **Object Filtering** - Include/exclude patterns for selective migration
+- **Bandwidth Throttling** - Control transfer speed to avoid overwhelming networks
+- **Error Handling** - Automatic retry with exponential backoff
+- **Progress Tracking** - Real-time updates with detailed statistics
 
-### Data Reconciliation
-Ensure data integrity with built-in verification:
-- **Checksum Verification** - Compare MD5/SHA256 hashes
-- **Size Validation** - Verify file sizes match
-- **Metadata Comparison** - Check object metadata
-- **Missing File Detection** - Identify incomplete transfers
+### Scheduling & Automation
+- **Cron Expressions** - Flexible scheduling with standard cron syntax
+- **One-time Migrations** - Immediate execution option
+- **Recurring Migrations** - Daily, weekly, monthly, or custom intervals
+- **Timezone Support** - Schedule migrations in any timezone
+- **Migration Queuing** - Smart queue management for multiple migrations
+
+### Advanced Reconciliation
+- **Handles millions of objects** efficiently with streaming technology
+- **Smart Object Detection** - 3-tier approach for accurate object count estimation
+- **Streaming Inventory** - Memory-efficient processing of large buckets (1M+ objects)
+- **Database-driven Comparison** - Lightning-fast difference detection using SQL
+- **Detailed Reports** - Comprehensive reconciliation results with actionable insights
+- **Progressive Verification** - Checkpoint-based resumable reconciliation
+- **Scalable Architecture** - Designed for enterprise-scale S3 migrations
+
+### Monitoring & Logging
+- **Real-time Dashboard** - Live migration status and statistics
+- **WebSocket Updates** - Instant progress notifications
+- **Health Check Endpoints** - **🆕 v1.1.0** Production monitoring
+- **Detailed Logging** - Migration-specific log files
+- **Error Reporting** - Comprehensive error tracking and analysis
+- **Historical Data** - Complete migration history with searchable records
 
 ## Architecture Overview
 
