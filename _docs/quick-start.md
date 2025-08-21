@@ -22,6 +22,7 @@ Choose your preferred method:
 
 ### Docker (Recommended)
 ```bash
+# Note: Verify Docker image availability before use
 docker run -d \
   --name s3-migration \
   -p 8080:8080 \
@@ -34,6 +35,7 @@ docker run -d \
 
 ### Command Line
 ```bash
+# Note: CLI interface is under development
 s3-migration-scheduler --port 8080
 ```
 

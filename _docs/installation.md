@@ -12,6 +12,8 @@ S3 Migration Scheduler is available for all major platforms. Choose the installa
 
 Docker is the fastest way to get started. No installation required, works everywhere Docker runs.
 
+> **Note**: Please verify that the Docker image `hndrwn/s3-migration-scheduler:latest` is available on Docker Hub before proceeding with these instructions.
+
 ### Prerequisites
 - Docker 20.10 or later
 - At least 2GB RAM

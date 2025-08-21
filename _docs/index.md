@@ -9,33 +9,13 @@ permalink: /docs/
 
 Welcome to the S3 Migration Scheduler documentation. Here you'll find everything you need to get started with migrating your S3 data efficiently and reliably.
 
-## Quick Navigation
+## Quick Start
 
-<div class="docs-grid">
-  <div class="docs-card">
-    <div class="docs-card-icon">🚀</div>
-    <h3><a href="{{ '/docs/installation/' | relative_url }}">Installation</a></h3>
-    <p>Get S3 Migration Scheduler installed on your platform of choice.</p>
-  </div>
-  
-  <div class="docs-card">
-    <div class="docs-card-icon">⚡</div>
-    <h3><a href="{{ '/docs/quick-start/' | relative_url }}">Quick Start</a></h3>
-    <p>Run your first migration in just a few minutes.</p>
-  </div>
-  
-  <div class="docs-card">
-    <div class="docs-card-icon">⚙️</div>
-    <h3><a href="{{ '/docs/configuration/' | relative_url }}">Configuration</a></h3>
-    <p>Configure the scheduler for your specific needs.</p>
-  </div>
-  
-  <div class="docs-card">
-    <div class="docs-card-icon">🔄</div>
-    <h3><a href="{{ '/docs/migration-workflows/' | relative_url }}">Migration Workflows</a></h3>
-    <p>Learn about different migration patterns and best practices.</p>
-  </div>
-</div>
+Ready to get started? Follow these steps:
+
+1. **[Install S3 Migration Scheduler]({{ '/docs/installation/' | relative_url }})** - Choose your platform
+2. **[Run Your First Migration]({{ '/docs/quick-start/' | relative_url }})** - Complete walkthrough
+3. **[Download Latest Release]({{ '/downloads/' | relative_url }})** - Get the software
 
 ## What is S3 Migration Scheduler?
 
@@ -44,7 +24,7 @@ S3 Migration Scheduler is an enterprise-grade, open-source tool designed to simp
 - **Real-time Monitoring** - Track progress with detailed metrics and logs
 - **Scheduled Migrations** - Automate migrations with cron-like scheduling
 - **Data Reconciliation** - Verify migration integrity automatically
-- **Multi-platform Support** - Available on Windows, macOS, Linux, and Docker
+- **Multi-platform Support** - Available on Windows, Linux, and Docker
 - **Enterprise Security** - Secure credential management and audit logging
 
 ## Getting Started
