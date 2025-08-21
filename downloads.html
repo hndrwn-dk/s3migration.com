@@ -1,0 +1,312 @@
+---
+layout: page
+title: Downloads
+description: Download S3 Migration Scheduler for your platform. Available for Windows, macOS, Linux, and Docker.
+---
+
+<div class="downloads-page">
+    <!-- Platform Detection -->
+    <div class="platform-detection">
+        <div class="detected-platform" id="detected-platform" style="display: none;">
+            <div class="detection-info">
+                <span class="detection-icon">🎯</span>
+                <div>
+                    <strong>Detected Platform:</strong>
+                    <span id="detected-os">Unknown</span>
+                </div>
+            </div>
+            <a href="#" class="btn btn-primary" id="recommended-download">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+                Download for <span id="recommended-platform">Your Platform</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Latest Release Info -->
+    <div class="release-info" id="release-info">
+        <div class="release-header">
+            <h2>Latest Release: <span id="release-version">Loading...</span></h2>
+            <div class="release-meta">
+                <span class="release-date" id="release-date">-</span>
+                <a href="#" id="release-notes-link" target="_blank" rel="noopener">View Release Notes</a>
+            </div>
+        </div>
+        <div class="release-description" id="release-description">
+            Loading release information...
+        </div>
+    </div>
+
+    <!-- Download Options -->
+    <div class="download-options">
+        <!-- Docker -->
+        <div class="download-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.186m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.184-.186h-2.12a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338 0-.676.03-1.01.09-.248-1.827-1.024-2.823-1.93-2.823-1.302 0-1.977 1.218-2.07 2.21l-1.29-.012c-.825 0-1.977.55-1.977 1.36v7.362c0 .725.588 1.313 1.314 1.313h16.518c.725 0 1.313-.588 1.313-1.313V13.25c0-1.313-.588-2.389-1.313-2.389l-.6.029z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>Docker</h3>
+                    <span class="badge recommended">Recommended</span>
+                </div>
+            </div>
+            
+            <p>The easiest way to get started. No installation required, works everywhere Docker runs.</p>
+            
+            <div class="docker-commands">
+                <div class="command-block">
+                    <div class="command-header">
+                        <span>Pull Latest Image</span>
+                        <button class="copy-button" data-clipboard-text="docker pull {{ site.docker.image_name }}:latest">Copy</button>
+                    </div>
+                    <pre><code>docker pull {{ site.docker.image_name }}:latest</code></pre>
+                </div>
+                
+                <div class="command-block">
+                    <div class="command-header">
+                        <span>Run Container</span>
+                        <button class="copy-button" data-clipboard-text="docker run -d -p 8080:8080 --name s3-migration {{ site.docker.image_name }}:latest">Copy</button>
+                    </div>
+                    <pre><code>docker run -d -p 8080:8080 --name s3-migration {{ site.docker.image_name }}:latest</code></pre>
+                </div>
+                
+                <div class="command-block">
+                    <div class="command-header">
+                        <span>Docker Compose</span>
+                        <button class="copy-button" data-clipboard-text="version: '3.8'
+services:
+  s3-migration:
+    image: {{ site.docker.image_name }}:latest
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped">Copy</button>
+                    </div>
+                    <pre><code>version: '3.8'
+services:
+  s3-migration:
+    image: {{ site.docker.image_name }}:latest
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped</code></pre>
+                </div>
+            </div>
+            
+            <div class="docker-links">
+                <a href="{{ site.docker.hub_url }}" class="btn btn-secondary" target="_blank" rel="noopener">
+                    View on Docker Hub
+                </a>
+                <a href="{{ '/docs/installation/#docker' | relative_url }}" class="btn btn-outline">
+                    Docker Installation Guide
+                </a>
+            </div>
+        </div>
+
+        <!-- Desktop Applications -->
+        <div class="download-section">
+            <div class="section-header">
+                <div class="section-icon">💻</div>
+                <div>
+                    <h3>Desktop Applications</h3>
+                    <span class="version-info">Version <span id="desktop-version">-</span></span>
+                </div>
+            </div>
+            
+            <p>Native desktop applications with GUI interface for easy migration management.</p>
+            
+            <div class="platform-grid">
+                <!-- Windows -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon">🪟</div>
+                        <h4>Windows</h4>
+                    </div>
+                    <div class="platform-downloads" id="windows-downloads">
+                        <a href="#" class="download-item" data-platform="windows-x64">
+                            <div class="download-info">
+                                <strong>Windows Installer (x64)</strong>
+                                <span class="file-type">.msi</span>
+                            </div>
+                            <div class="download-size">-</div>
+                        </a>
+                        <a href="#" class="download-item" data-platform="windows-x86">
+                            <div class="download-info">
+                                <strong>Windows Installer (x86)</strong>
+                                <span class="file-type">.msi</span>
+                            </div>
+                            <div class="download-size">-</div>
+                        </a>
+                        <a href="#" class="download-item" data-platform="windows-portable">
+                            <div class="download-info">
+                                <strong>Portable Version</strong>
+                                <span class="file-type">.zip</span>
+                            </div>
+                            <div class="download-size">-</div>
+                        </a>
+                    </div>
+                    <div class="platform-requirements">
+                        <small>Requires Windows 10 or later</small>
+                    </div>
+                </div>
+
+                <!-- macOS -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon">🍎</div>
+                        <h4>macOS</h4>
+                    </div>
+                    <div class="platform-downloads" id="macos-downloads">
+                        <a href="#" class="download-item" data-platform="macos-universal">
+                            <div class="download-info">
+                                <strong>Universal Binary</strong>
+                                <span class="file-type">.dmg</span>
+                            </div>
+                            <div class="download-size">-</div>
+                        </a>
+                        <a href="#" class="download-item" data-platform="macos-intel">
+                            <div class="download-info">
+                                <strong>Intel Mac</strong>
+                                <span class="file-type">.dmg</span>
+                            </div>
+                            <div class="download-size">-</div>
+                        </a>
+                        <a href="#" class="download-item" data-platform="macos-arm">
+                            <div class="download-info">
+                                <strong>Apple Silicon</strong>
+                                <span class="file-type">.dmg</span>
+                            </div>
+                            <div class="download-size">-</div>
+                        </a>
+                    </div>
+                    <div class="platform-requirements">
+                        <small>Requires macOS 11.0 or later</small>
+                    </div>
+                </div>
+
+                <!-- Linux -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon">🐧</div>
+                        <h4>Linux</h4>
+                    </div>
+                    <div class="platform-downloads" id="linux-downloads">
+                        <a href="#" class="download-item" data-platform="linux-appimage">
+                            <div class="download-info">
+                                <strong>AppImage (Universal)</strong>
+                                <span class="file-type">.AppImage</span>
+                            </div>
+                            <div class="download-size">-</div>
+                        </a>
+                        <a href="#" class="download-item" data-platform="linux-deb">
+                            <div class="download-info">
+                                <strong>Debian/Ubuntu</strong>
+                                <span class="file-type">.deb</span>
+                            </div>
+                            <div class="download-size">-</div>
+                        </a>
+                        <a href="#" class="download-item" data-platform="linux-rpm">
+                            <div class="download-info">
+                                <strong>Red Hat/Fedora</strong>
+                                <span class="file-type">.rpm</span>
+                            </div>
+                            <div class="download-size">-</div>
+                        </a>
+                        <a href="#" class="download-item" data-platform="linux-tar">
+                            <div class="download-info">
+                                <strong>Tarball</strong>
+                                <span class="file-type">.tar.gz</span>
+                            </div>
+                            <div class="download-size">-</div>
+                        </a>
+                    </div>
+                    <div class="platform-requirements">
+                        <small>Most Linux distributions supported</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Source Code -->
+        <div class="download-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>Source Code</h3>
+                    <span class="badge open-source">Open Source</span>
+                </div>
+            </div>
+            
+            <p>Build from source or contribute to the project. Released under MIT License.</p>
+            
+            <div class="source-options">
+                <div class="source-block">
+                    <div class="source-header">
+                        <span>Clone Repository</span>
+                        <button class="copy-button" data-clipboard-text="git clone {{ site.github.repository_url }}.git">Copy</button>
+                    </div>
+                    <pre><code>git clone {{ site.github.repository_url }}.git</code></pre>
+                </div>
+                
+                <div class="source-links">
+                    <a href="{{ site.github.repository_url }}" class="btn btn-secondary" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        View on GitHub
+                    </a>
+                    <a href="{{ site.github.repository_url }}/archive/refs/heads/main.zip" class="btn btn-outline" id="source-zip">
+                        Download ZIP
+                    </a>
+                    <a href="{{ '/docs/build/' | relative_url }}" class="btn btn-outline">
+                        Build Instructions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Installation Help -->
+    <div class="installation-help">
+        <h2>Need Help Installing?</h2>
+        <div class="help-grid">
+            <a href="{{ '/docs/installation/' | relative_url }}" class="help-card">
+                <div class="help-icon">📖</div>
+                <h4>Installation Guide</h4>
+                <p>Step-by-step instructions for all platforms</p>
+            </a>
+            
+            <a href="{{ '/docs/quick-start/' | relative_url }}" class="help-card">
+                <div class="help-icon">🚀</div>
+                <h4>Quick Start</h4>
+                <p>Get up and running in minutes</p>
+            </a>
+            
+            <a href="{{ '/docs/troubleshooting/' | relative_url }}" class="help-card">
+                <div class="help-icon">🔧</div>
+                <h4>Troubleshooting</h4>
+                <p>Common issues and solutions</p>
+            </a>
+            
+            <a href="{{ site.github.repository_url }}/discussions" class="help-card" target="_blank" rel="noopener">
+                <div class="help-icon">💬</div>
+                <h4>Community Support</h4>
+                <p>Get help from the community</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for dynamic content -->
+<script>
+// Platform detection and download logic will be added via main.js
+</script>

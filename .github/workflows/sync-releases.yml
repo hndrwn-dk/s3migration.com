@@ -1,0 +1,179 @@
+name: Sync Releases from Main Repo
+
+on:
+  # Trigger when main repository creates a new release
+  repository_dispatch:
+    types: [new-release]
+  
+  # Allow manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Release tag to sync (e.g., v1.0.0)'
+        required: true
+        type: string
+
+  # Check for new releases daily
+  schedule:
+    - cron: '0 6 * * *'  # 6 AM UTC daily
+
+jobs:
+  sync-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout website repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+          
+      - name: Get latest release from main repo
+        id: get_release
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            RELEASE_TAG="${{ github.event.inputs.release_tag }}"
+          else
+            # Get latest release
+            RELEASE_TAG=$(curl -s https://api.github.com/repos/hndrwn-dk/s3-migration-scheduler/releases/latest | jq -r '.tag_name')
+          fi
+          
+          echo "release_tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
+          
+          # Get release information
+          RELEASE_INFO=$(curl -s https://api.github.com/repos/hndrwn-dk/s3-migration-scheduler/releases/tags/$RELEASE_TAG)
+          
+          echo "release_name=$(echo "$RELEASE_INFO" | jq -r '.name')" >> $GITHUB_OUTPUT
+          echo "release_body=$(echo "$RELEASE_INFO" | jq -r '.body')" >> $GITHUB_OUTPUT
+          echo "release_date=$(echo "$RELEASE_INFO" | jq -r '.published_at')" >> $GITHUB_OUTPUT
+          echo "release_url=$(echo "$RELEASE_INFO" | jq -r '.html_url')" >> $GITHUB_OUTPUT
+          
+      - name: Update version in config
+        run: |
+          # Update version in _config.yml
+          sed -i "s/current_version: .*/current_version: \"${{ steps.get_release.outputs.release_tag }}\"/" _config.yml
+          
+          # Add current_version if it doesn't exist
+          if ! grep -q "current_version:" _config.yml; then
+            echo "current_version: \"${{ steps.get_release.outputs.release_tag }}\"" >> _config.yml
+          fi
+          
+      - name: Create/Update changelog entry
+        run: |
+          CHANGELOG_FILE="_docs/changelog.md"
+          RELEASE_TAG="${{ steps.get_release.outputs.release_tag }}"
+          RELEASE_NAME="${{ steps.get_release.outputs.release_name }}"
+          RELEASE_BODY="${{ steps.get_release.outputs.release_body }}"
+          RELEASE_DATE="${{ steps.get_release.outputs.release_date }}"
+          RELEASE_URL="${{ steps.get_release.outputs.release_url }}"
+          
+          # Create changelog file if it doesn't exist
+          if [ ! -f "$CHANGELOG_FILE" ]; then
+            cat > "$CHANGELOG_FILE" << 'EOF'
+          ---
+          layout: docs
+          title: Changelog
+          description: Release notes and changelog for S3 Migration Scheduler
+          ---
+          
+          # Changelog
+          
+          All notable changes to S3 Migration Scheduler are documented here.
+          
+          EOF
+          fi
+          
+          # Check if this version already exists in changelog
+          if ! grep -q "## \[$RELEASE_TAG\]" "$CHANGELOG_FILE"; then
+            # Create temporary file with new entry
+            cat > temp_changelog.md << EOF
+          ---
+          layout: docs
+          title: Changelog
+          description: Release notes and changelog for S3 Migration Scheduler
+          ---
+          
+          # Changelog
+          
+          All notable changes to S3 Migration Scheduler are documented here.
+          
+          ## [$RELEASE_TAG] - $(date -d "$RELEASE_DATE" +"%Y-%m-%d")
+          
+          **Release**: [$RELEASE_NAME]($RELEASE_URL)
+          
+          $RELEASE_BODY
+          
+          EOF
+          
+            # Append existing content (skip the header)
+            tail -n +8 "$CHANGELOG_FILE" >> temp_changelog.md
+            mv temp_changelog.md "$CHANGELOG_FILE"
+          fi
+          
+      - name: Update download page data
+        run: |
+          # Create data file for downloads page
+          mkdir -p _data
+          
+          cat > _data/latest_release.yml << EOF
+          version: "${{ steps.get_release.outputs.release_tag }}"
+          name: "${{ steps.get_release.outputs.release_name }}"
+          date: "${{ steps.get_release.outputs.release_date }}"
+          url: "${{ steps.get_release.outputs.release_url }}"
+          description: |
+            ${{ steps.get_release.outputs.release_body }}
+          EOF
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          git add .
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          git commit -m "🚀 Sync release ${{ steps.get_release.outputs.release_tag }} from main repository"
+          git push
+          
+      - name: Create GitHub release (if needed)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if release already exists in this repo
+          if gh release view "${{ steps.get_release.outputs.release_tag }}" > /dev/null 2>&1; then
+            echo "Release already exists in website repository"
+            exit 0
+          fi
+          
+          # Create release in website repository
+          gh release create "${{ steps.get_release.outputs.release_tag }}" \
+            --title "Website Update: ${{ steps.get_release.outputs.release_name }}" \
+            --notes "Website updated to reflect release ${{ steps.get_release.outputs.release_tag }} from the main repository.
+
+          **Main Repository Release**: ${{ steps.get_release.outputs.release_url }}
+
+          ### Changes
+          ${{ steps.get_release.outputs.release_body }}"
+
+  # Trigger website rebuild after sync
+  rebuild-site:
+    needs: sync-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Pages build
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages/builds"

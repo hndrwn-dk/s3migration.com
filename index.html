@@ -1,0 +1,341 @@
+---
+layout: default
+title: Enterprise S3 Migration Made Simple
+description: Open-source, production-ready S3 migration tool with real-time monitoring, scheduling, and multi-platform support.
+---
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Enterprise S3 Migration<br>Made <span class="highlight">Simple</span></h1>
+                <p class="hero-description">
+                    Open-source, production-ready S3 migration tool with real-time monitoring, 
+                    scheduled migrations, and reconciliation tracking. Available on all platforms.
+                </p>
+                
+                <div class="hero-actions">
+                    <a href="#downloads" class="btn btn-primary btn-large">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                        Download Now
+                    </a>
+                    <a href="{{ '/docs/quick-start/' | relative_url }}" class="btn btn-secondary btn-large">
+                        Quick Start Guide
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="github-stars">-</span>
+                        <span class="stat-label">GitHub Stars</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="docker-pulls">-</span>
+                        <span class="stat-label">Docker Pulls</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="total-downloads">-</span>
+                        <span class="stat-label">Downloads</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="terminal-button red"></span>
+                            <span class="terminal-button yellow"></span>
+                            <span class="terminal-button green"></span>
+                        </div>
+                        <div class="terminal-title">S3 Migration Scheduler</div>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span>
+                            <span class="terminal-command">docker run -d hndrwn/s3-migration-scheduler</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">✓ Starting S3 Migration Scheduler...</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">✓ Web UI available at http://localhost:8080</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">✓ Ready for migrations</span>
+                        </div>
+                        <div class="terminal-cursor">_</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Start Section -->
+<section class="quick-start">
+    <div class="container">
+        <div class="quick-start-content">
+            <h2>Get Started in Seconds</h2>
+            <div class="quick-start-tabs">
+                <button class="tab-button active" data-tab="docker">Docker</button>
+                <button class="tab-button" data-tab="desktop">Desktop</button>
+                <button class="tab-button" data-tab="source">Source</button>
+            </div>
+            
+            <div class="tab-content active" id="docker-tab">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>Docker (Recommended)</span>
+                        <button class="copy-button" data-clipboard-text="docker run -d -p 8080:8080 hndrwn/s3-migration-scheduler">Copy</button>
+                    </div>
+                    <pre><code>docker run -d -p 8080:8080 hndrwn/s3-migration-scheduler</code></pre>
+                </div>
+                <p>Access the web interface at <code>http://localhost:8080</code></p>
+            </div>
+            
+            <div class="tab-content" id="desktop-tab">
+                <div class="platform-downloads">
+                    <a href="#" class="platform-download" id="download-windows">
+                        <div class="platform-icon">🪟</div>
+                        <div class="platform-info">
+                            <strong>Windows</strong>
+                            <span>Installer (.msi)</span>
+                        </div>
+                    </a>
+                    <a href="#" class="platform-download" id="download-macos">
+                        <div class="platform-icon">🍎</div>
+                        <div class="platform-info">
+                            <strong>macOS</strong>
+                            <span>App Bundle (.dmg)</span>
+                        </div>
+                    </a>
+                    <a href="#" class="platform-download" id="download-linux">
+                        <div class="platform-icon">🐧</div>
+                        <div class="platform-info">
+                            <strong>Linux</strong>
+                            <span>AppImage</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="source-tab">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>Build from Source</span>
+                        <button class="copy-button" data-clipboard-text="git clone https://github.com/hndrwn-dk/s3-migration-scheduler.git
+cd s3-migration-scheduler
+make build">Copy</button>
+                    </div>
+                    <pre><code>git clone https://github.com/hndrwn-dk/s3-migration-scheduler.git
+cd s3-migration-scheduler
+make build</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <div class="container">
+        <div class="section-header">
+            <h2>Powerful Features for Enterprise Migration</h2>
+            <p>Everything you need for reliable, scalable S3 migrations</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <h3>Real-time Monitoring</h3>
+                <p>Track migration progress with live updates, detailed logs, and comprehensive metrics dashboard.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                        <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                </div>
+                <h3>Scheduled Migrations</h3>
+                <p>Set up automated migrations with cron-like scheduling. Perfect for regular backups and data synchronization.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3>Data Reconciliation</h3>
+                <p>Verify migration integrity with built-in reconciliation tools. Ensure every file is transferred correctly.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+                    </svg>
+                </div>
+                <h3>Multi-Platform Support</h3>
+                <p>Available on Windows, macOS, Linux, and Docker. Use the same tool across your entire infrastructure.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                    </svg>
+                </div>
+                <h3>Enterprise Security</h3>
+                <p>Secure credential management, encrypted transfers, and audit logging for compliance requirements.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                    </svg>
+                </div>
+                <h3>Performance Optimized</h3>
+                <p>Multi-threaded transfers, bandwidth limiting, and smart retry logic for optimal performance.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Downloads Section -->
+<section class="downloads" id="downloads">
+    <div class="container">
+        <div class="section-header">
+            <h2>Download S3 Migration Scheduler</h2>
+            <p>Choose your preferred installation method</p>
+        </div>
+        
+        <div class="download-cards">
+            <div class="download-card featured">
+                <div class="download-header">
+                    <div class="download-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Docker</h3>
+                        <span class="badge">Recommended</span>
+                    </div>
+                </div>
+                <p>Get started instantly with Docker. No installation required.</p>
+                <div class="download-actions">
+                    <a href="{{ site.docker.hub_url }}" class="btn btn-primary" target="_blank" rel="noopener">
+                        View on Docker Hub
+                    </a>
+                </div>
+                <div class="download-command">
+                    <code>docker pull {{ site.docker.image_name }}</code>
+                    <button class="copy-button" data-clipboard-text="docker pull {{ site.docker.image_name }}">Copy</button>
+                </div>
+            </div>
+            
+            <div class="download-card">
+                <div class="download-header">
+                    <div class="download-icon">💻</div>
+                    <div>
+                        <h3>Desktop Apps</h3>
+                        <span class="version-badge" id="latest-version">v1.0.0</span>
+                    </div>
+                </div>
+                <p>Native desktop applications for all major platforms.</p>
+                <div class="platform-downloads">
+                    <a href="#" class="download-link" id="download-windows-main">
+                        <span class="platform-name">Windows</span>
+                        <span class="file-type">(.msi)</span>
+                    </a>
+                    <a href="#" class="download-link" id="download-macos-main">
+                        <span class="platform-name">macOS</span>
+                        <span class="file-type">(.dmg)</span>
+                    </a>
+                    <a href="#" class="download-link" id="download-linux-main">
+                        <span class="platform-name">Linux</span>
+                        <span class="file-type">(.AppImage)</span>
+                    </a>
+                </div>
+                <div class="download-actions">
+                    <a href="{{ '/downloads/' | relative_url }}" class="btn btn-secondary">
+                        All Downloads
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Community Section -->
+<section class="community">
+    <div class="container">
+        <div class="community-content">
+            <div class="community-text">
+                <h2>Join the Community</h2>
+                <p>S3 Migration Scheduler is open source and community-driven. Join thousands of developers and IT professionals using our tool for their migration needs.</p>
+                
+                <div class="community-links">
+                    <a href="{{ site.github.repository_url }}" class="community-link" target="_blank" rel="noopener">
+                        <div class="community-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>GitHub</strong>
+                            <span>Source code & issues</span>
+                        </div>
+                    </a>
+                    
+                    <a href="{{ site.github.repository_url }}/discussions" class="community-link" target="_blank" rel="noopener">
+                        <div class="community-icon">💬</div>
+                        <div>
+                            <strong>Discussions</strong>
+                            <span>Community support</span>
+                        </div>
+                    </a>
+                    
+                    <a href="{{ site.docker.hub_url }}" class="community-link" target="_blank" rel="noopener">
+                        <div class="community-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Docker Hub</strong>
+                            <span>Container images</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="community-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="contributors-count">-</div>
+                    <div class="stat-label">Contributors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="issues-count">-</div>
+                    <div class="stat-label">Issues Resolved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="commits-count">-</div>
+                    <div class="stat-label">Commits</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
