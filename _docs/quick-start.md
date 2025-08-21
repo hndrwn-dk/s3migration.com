@@ -343,25 +343,6 @@ options:
 }
 ```
 
-## Next Steps
-
-Now that you've completed your first migration, explore more advanced features:
-
-1. **[Configuration Guide]({{ '/docs/configuration/' | relative_url }})** - Customize settings for your needs
-2. **[Migration Workflows]({{ '/docs/migration-workflows/' | relative_url }})** - Learn advanced migration patterns
-3. **[Scheduling]({{ '/docs/scheduling/' | relative_url }})** - Set up automated migrations
-4. **[Monitoring]({{ '/docs/monitoring/' | relative_url }})** - Advanced monitoring and alerting
-5. **[API Reference]({{ '/docs/api/' | relative_url }})** - Integrate with your systems
-
-## Getting Help
-
-If you run into issues:
-
-- **[Troubleshooting Guide]({{ '/docs/troubleshooting/' | relative_url }})** - Common problems and solutions
-- **[FAQ]({{ '/docs/faq/' | relative_url }})** - Frequently asked questions
-- **[GitHub Issues]({{ site.github.repository_url }}/issues)** - Report bugs or request features
-- **[Community Discussions]({{ site.github.repository_url }}/discussions)** - Get help from the community
-
 ---
 
-*Congratulations! You've successfully completed your first S3 migration. Ready to explore more advanced features?*
+*Congratulations! You've successfully completed your first S3 migration with S3 Migration Scheduler!*

@@ -6,35 +6,18 @@ layout: default
     <div class="container">
         <div class="docs-sidebar">
             <div class="docs-nav">
-                <h4>Getting Started</h4>
+                <h4>Documentation</h4>
                 <ul>
+                    <li><a href="{{ '/docs/' | relative_url }}" {% if page.url == '/docs/' %}class="active"{% endif %}>Overview</a></li>
                     <li><a href="{{ '/docs/installation/' | relative_url }}" {% if page.url contains '/docs/installation/' %}class="active"{% endif %}>Installation</a></li>
                     <li><a href="{{ '/docs/quick-start/' | relative_url }}" {% if page.url contains '/docs/quick-start/' %}class="active"{% endif %}>Quick Start</a></li>
-                    <li><a href="{{ '/docs/configuration/' | relative_url }}" {% if page.url contains '/docs/configuration/' %}class="active"{% endif %}>Configuration</a></li>
                 </ul>
                 
-                <h4>User Guide</h4>
+                <h4>External Resources</h4>
                 <ul>
-                    <li><a href="{{ '/docs/migration-workflows/' | relative_url }}" {% if page.url contains '/docs/migration-workflows/' %}class="active"{% endif %}>Migration Workflows</a></li>
-                    <li><a href="{{ '/docs/scheduling/' | relative_url }}" {% if page.url contains '/docs/scheduling/' %}class="active"{% endif %}>Scheduling</a></li>
-                    <li><a href="{{ '/docs/monitoring/' | relative_url }}" {% if page.url contains '/docs/monitoring/' %}class="active"{% endif %}>Monitoring & Logs</a></li>
-                    <li><a href="{{ '/docs/reconciliation/' | relative_url }}" {% if page.url contains '/docs/reconciliation/' %}class="active"{% endif %}>Reconciliation</a></li>
-                    <li><a href="{{ '/docs/troubleshooting/' | relative_url }}" {% if page.url contains '/docs/troubleshooting/' %}class="active"{% endif %}>Troubleshooting</a></li>
-                </ul>
-                
-                <h4>Developer</h4>
-                <ul>
-                    <li><a href="{{ '/docs/api/' | relative_url }}" {% if page.url contains '/docs/api/' %}class="active"{% endif %}>API Reference</a></li>
-                    <li><a href="{{ '/docs/build/' | relative_url }}" {% if page.url contains '/docs/build/' %}class="active"{% endif %}>Building from Source</a></li>
-                    <li><a href="{{ '/docs/contributing/' | relative_url }}" {% if page.url contains '/docs/contributing/' %}class="active"{% endif %}>Contributing</a></li>
-                    <li><a href="{{ '/docs/architecture/' | relative_url }}" {% if page.url contains '/docs/architecture/' %}class="active"{% endif %}>Architecture</a></li>
-                </ul>
-                
-                <h4>Reference</h4>
-                <ul>
-                    <li><a href="{{ '/docs/examples/' | relative_url }}" {% if page.url contains '/docs/examples/' %}class="active"{% endif %}>Examples</a></li>
-                    <li><a href="{{ '/docs/changelog/' | relative_url }}" {% if page.url contains '/docs/changelog/' %}class="active"{% endif %}>Changelog</a></li>
-                    <li><a href="{{ '/docs/faq/' | relative_url }}" {% if page.url contains '/docs/faq/' %}class="active"{% endif %}>FAQ</a></li>
+                    <li><a href="https://github.com/hndrwn-dk/s3-migration-scheduler" target="_blank">GitHub Repository</a></li>
+                    <li><a href="https://github.com/hndrwn-dk/s3-migration-scheduler/issues" target="_blank">Report Issues</a></li>
+                    <li><a href="{{ '/downloads/' | relative_url }}">Downloads</a></li>
                 </ul>
             </div>
         </div>
