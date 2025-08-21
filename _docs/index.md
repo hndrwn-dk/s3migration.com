@@ -96,25 +96,6 @@ S3 Migration Scheduler is an enterprise-grade, open-source tool designed to simp
 
 ## Architecture Overview
 
-```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Source S3     │    │  S3 Migration    │    │ Destination S3  │
-│     Bucket      │◄──►│    Scheduler     │◄──►│     Bucket      │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-                              │
-                              ▼
-                       ┌──────────────────┐
-                       │  Web Dashboard   │
-                       │   & Monitoring   │
-                       └──────────────────┘
-```
-
-The scheduler acts as an intelligent proxy between your source and destination S3 endpoints, providing:
-- Multi-threaded transfers for optimal performance
-- Automatic retry logic for failed transfers
-- Progress tracking and detailed logging
-- Web-based monitoring interface
-
 ## Next Steps
 
 Ready to dive deeper?
