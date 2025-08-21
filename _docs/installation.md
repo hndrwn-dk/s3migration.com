@@ -22,95 +22,35 @@ Docker is the fastest way to get started. No installation required, works everyw
 ### Quick Start
 
 ```bash
-# Pull the latest image
-docker pull hndrwn/s3-migration-scheduler:latest
-
-# Run with default configuration
+# Pull and run from Docker Hub
 docker run -d \
-  --name s3-migration \
-  -p 8080:8080 \
+  --name s3-migration-scheduler \
+  -p 5000:5000 \
+  -e NODE_ENV=production \
+  -v s3-migration-data:/app/data \
   hndrwn/s3-migration-scheduler:latest
 
-# Access the web interface
-open http://localhost:8080
-```
-
-### With Custom Configuration
-
-```bash
-# Create a config directory
-mkdir -p ./config
-
-# Create your configuration file
-cat > ./config/config.yml << EOF
-source:
-  endpoint: "https://s3.amazonaws.com"
-  bucket: "my-source-bucket"
-  region: "us-east-1"
-  
-destination:
-  endpoint: "https://s3.us-west-2.amazonaws.com"
-  bucket: "my-destination-bucket"
-  region: "us-west-2"
-EOF
-
-# Run with custom config
-docker run -d \
-  --name s3-migration \
-  -p 8080:8080 \
-  -v $(pwd)/config:/app/config \
-  hndrwn/s3-migration-scheduler:latest
+# Access web interface
+open http://localhost:5000
 ```
 
 ### Docker Compose
 
-For production deployments, use Docker Compose:
-
-```yaml
-# docker-compose.yml
-version: '3.8'
-
-services:
-  s3-migration:
-    image: hndrwn/s3-migration-scheduler:latest
-    container_name: s3-migration
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./config:/app/config
-      - ./logs:/app/logs
-      - ./data:/app/data
-    environment:
-      - LOG_LEVEL=info
-      - MAX_WORKERS=8
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # Optional: Add a reverse proxy
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./ssl:/etc/nginx/ssl
-    depends_on:
-      - s3-migration
-```
-
 ```bash
-# Start the stack
+# Clone repository
+git clone https://github.com/hndrwn-dk/s3-migration-scheduler.git
+cd s3-migration-scheduler/docs/docker
+
+# Start with Docker Compose
 docker-compose up -d
 
-# View logs
-docker-compose logs -f s3-migration
+# Check status
+docker-compose ps
 
-# Stop the stack
+# View logs
+docker-compose logs -f
+
+# Stop when done
 docker-compose down
 ```
 
@@ -129,7 +69,7 @@ Native desktop applications with GUI interface for easy migration management.
 #### Installation Steps
 
 1. **Download the installer** from the [Downloads page]({{ '/downloads/' | relative_url }})
-2. **Run the installer** as Administrator
+2. **Run the installer**
 3. **Follow the setup wizard**
 4. **Launch from Start Menu** or Desktop shortcut
 
@@ -164,28 +104,21 @@ chmod +x S3MigrationScheduler-x86_64.AppImage
 # Run directly
 ./S3MigrationScheduler-x86_64.AppImage
 
-# Optional: Integrate with system
-./S3MigrationScheduler-x86_64.AppImage --appimage-extract
-sudo mv squashfs-root/usr/share/applications/s3-migration-scheduler.desktop /usr/share/applications/
-sudo mv squashfs-root/usr/share/icons/hicolor/256x256/apps/s3-migration-scheduler.png /usr/share/icons/hicolor/256x256/apps/
 ```
 
 #### Debian/Ubuntu (.deb)
 
-```bash
-# Download and install
-wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest/download/s3-migration-scheduler_amd64.deb
-sudo dpkg -i s3-migration-scheduler_amd64.deb
+# Download
+wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest/download/s3-migration-scheduler-desktop_1.0.0_amd64.deb
 
-# Install dependencies if needed
-sudo apt-get install -f
+# Install
+sudo dpkg -i s3-migration-scheduler-desktop_1.0.0_amd64.deb
+sudo apt-get install -f  # Fix dependencies if needed
 
-# Start the application
-s3-migration-scheduler
-
-# Or use the desktop entry
-gtk-launch s3-migration-scheduler
+# Launch from menu or command line
+s3-migration-scheduler-desktop
 ```
+
 
 #### Red Hat/Fedora (.rpm)
 
