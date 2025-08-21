@@ -175,22 +175,3 @@ sync:
     delete_orphaned: false
 ```
 
-## Support & Community
-
-- **[GitHub Issues]({{ site.github.repository_url }}/issues)** - Bug reports and feature requests
-- **[Discussions]({{ site.github.repository_url }}/discussions)** - Community support and Q&A
-- **[Contributing Guide]({{ '/docs/contributing/' | relative_url }})** - How to contribute to the project
-- **[API Reference]({{ '/docs/api/' | relative_url }})** - Complete API documentation
-
-## Next Steps
-
-Ready to get started? Choose your path:
-
-1. **New Users** → Start with [Installation]({{ '/docs/installation/' | relative_url }}) then [Quick Start]({{ '/docs/quick-start/' | relative_url }})
-2. **Existing Users** → Check out [Migration Workflows]({{ '/docs/migration-workflows/' | relative_url }}) for advanced patterns
-3. **Developers** → See [API Reference]({{ '/docs/api/' | relative_url }}) and [Contributing Guide]({{ '/docs/contributing/' | relative_url }})
-4. **System Administrators** → Review [Configuration]({{ '/docs/configuration/' | relative_url }}) and [Monitoring]({{ '/docs/monitoring/' | relative_url }})
-
----
-
-*Need help? Join our community on [GitHub Discussions]({{ site.github.repository_url }}/discussions) or check our [FAQ]({{ '/docs/faq/' | relative_url }}).*
