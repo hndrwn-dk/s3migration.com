@@ -22,7 +22,6 @@ Ready to get started? Follow these steps:
 S3 Migration Scheduler is an enterprise-grade, open-source tool designed to simplify and automate S3 data migrations. Whether you're moving data between AWS regions, migrating to a different cloud provider, or creating scheduled backups, our tool provides:
 
 - **Real-time Monitoring** - Track progress with detailed metrics and logs
-- **Scheduled Migrations** - Automate migrations with cron-like scheduling
 - **Data Reconciliation** - Verify migration integrity automatically
 - **Multi-platform Support** - Available on Windows, Linux, and Docker
 - **Enterprise Security** - Secure credential management and audit logging
@@ -35,24 +34,27 @@ S3 Migration Scheduler is an enterprise-grade, open-source tool designed to simp
 - **[Desktop App]({{ '/docs/installation/#desktop' | relative_url }})** - Native GUI applications
 - **[Build from Source]({{ '/docs/installation/#source' | relative_url }})** - For developers and contributors
 
-### 2. Basic Configuration
+### 2. Configure Your Migration
 
+Create a simple configuration file:
 ```yaml
 # config.yml
 source:
   endpoint: "https://s3.amazonaws.com"
-  bucket: "my-source-bucket"
-  region: "us-east-1"
-  
-destination:
-  endpoint: "https://s3.us-west-2.amazonaws.com"
-  bucket: "my-destination-bucket"
-  region: "us-west-2"
+  bucket: "source-bucket"
+  access_key: "your-access-key"
+  secret_key: "your-secret-key"
 
-migration:
+destination:
+  endpoint: "https://s3.amazonaws.com"
+  bucket: "destination-bucket"
+  access_key: "your-access-key"
+  secret_key: "your-secret-key"
+
+options:
   workers: 4
   chunk_size: "64MB"
-  verify: true
+  verify_checksums: true
 ```
 
 ### 3. Run Your First Migration
@@ -66,29 +68,30 @@ docker run -v $(pwd)/config.yml:/app/config.yml \
 s3-migration-scheduler migrate --config config.yml
 ```
 
+## Screenshots
+
+Here are some screenshots of the S3 Migration Scheduler interface:
+
+### Main Dashboard
+![Main Dashboard]({{ '/assets/images/docs/dashboard.png' | relative_url }})
+*The main dashboard showing migration progress and system status*
+
+### Migration Setup
+![Migration Setup]({{ '/assets/images/docs/setup.png' | relative_url }})
+*Configuration interface for setting up new migrations*
+
+### Progress Monitoring
+![Progress Monitoring]({{ '/assets/images/docs/progress.png' | relative_url }})
+*Real-time progress tracking with detailed metrics*
+
 ## Key Features
 
 ### Real-time Monitoring
-Monitor your migrations with a comprehensive web dashboard that shows:
+Track your migrations with comprehensive metrics:
 - Transfer progress and speed
 - File-level status tracking
 - Error reporting and retry logic
 - Performance metrics and statistics
-
-### Scheduled Migrations
-Set up automated migrations using cron expressions:
-```yaml
-schedule:
-  # Daily backup at 2 AM
-  - cron: "0 2 * * *"
-    source: "production-bucket"
-    destination: "backup-bucket"
-    
-  # Weekly sync every Sunday
-  - cron: "0 0 * * 0"
-    source: "staging-bucket"
-    destination: "archive-bucket"
-```
 
 ### Data Reconciliation
 Ensure data integrity with built-in verification:
@@ -118,40 +121,10 @@ The scheduler acts as an intelligent proxy between your source and destination S
 - Progress tracking and detailed logging
 - Web-based monitoring interface
 
-## Common Use Cases
+## Next Steps
 
-### 1. Cloud Migration
-Moving data between different cloud providers or regions:
-```yaml
-# AWS to Google Cloud Storage
-source:
-  endpoint: "https://s3.amazonaws.com"
-  bucket: "aws-bucket"
-  
-destination:
-  endpoint: "https://storage.googleapis.com"
-  bucket: "gcs-bucket"
-```
+Ready to dive deeper?
 
-### 2. Backup & Archive
-Automated backups to long-term storage:
-```yaml
-# Daily backup to Glacier
-schedule:
-  - cron: "0 1 * * *"
-    source: "production-data"
-    destination: "glacier-archive"
-    storage_class: "GLACIER"
-```
-
-### 3. Data Synchronization
-Keep multiple buckets in sync:
-```yaml
-# Bi-directional sync
-sync:
-  - source: "primary-bucket"
-    destination: "replica-bucket"
-    bidirectional: true
-    delete_orphaned: false
-```
-
+1. **[Installation Guide]({{ '/docs/installation/' | relative_url }})** - Detailed setup instructions
+2. **[Quick Start Guide]({{ '/docs/quick-start/' | relative_url }})** - Step-by-step tutorial
+3. **[Download Software]({{ '/downloads/' | relative_url }})** - Get the latest version
