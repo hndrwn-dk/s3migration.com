@@ -22,15 +22,16 @@ Choose your preferred method:
 
 ### Docker (Recommended)
 ```bash
-# Pull the latest image
-docker pull hndrwn/s3-migration-scheduler:latest
-
-# Run the container
+# Pull and run in one command
 docker run -d \
   --name s3-migration \
   -p 8080:8080 \
   -v s3-migration-data:/app/data \
   hndrwn/s3-migration-scheduler:latest
+
+# Or pull first, then run
+docker pull hndrwn/s3-migration-scheduler:latest
+docker run -d --name s3-migration -p 8080:8080 hndrwn/s3-migration-scheduler:latest
 ```
 
 ### Desktop Application
