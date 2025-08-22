@@ -385,9 +385,10 @@
                 window.open('https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest', '_blank');
             }
         }
+    };
 
-
-
+    // Download utilities
+    const downloadUtils = {
         getPlatformAssets(assets, platform) {
             const patterns = {
                 windows: /windows|win.*x64|win64|\.msi|\.exe/i,
