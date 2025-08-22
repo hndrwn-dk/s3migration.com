@@ -502,6 +502,7 @@
                     if (mainLink) {
                         mainLink.href = platformAssets[0].download_url;
                     }
+                }
 
                     // Update detailed download section
                     const downloadsContainer = document.getElementById(`${platform}-downloads`);
@@ -528,6 +529,35 @@
                     sourceZipElement.href = sourceAsset.download_url;
                 }
             }
+
+            // Update downloads page specific links
+            this.updateDownloadsPageLinks(assets);
+        },
+
+        updateDownloadsPageLinks(assets) {
+            // Update all download items on the downloads page
+            const downloadItems = document.querySelectorAll('.download-item[data-asset-pattern]');
+            
+            downloadItems.forEach(item => {
+                const pattern = item.getAttribute('data-asset-pattern');
+                const platform = item.getAttribute('data-platform');
+                
+                if (pattern) {
+                    const regex = new RegExp(pattern, 'i');
+                    const matchingAsset = assets.find(asset => regex.test(asset.name));
+                    
+                    if (matchingAsset) {
+                        // Update the download URL
+                        item.href = matchingAsset.download_url;
+                        
+                        // Update the file size
+                        const sizeElement = item.querySelector(`[data-size-target="${platform}"]`);
+                        if (sizeElement) {
+                            sizeElement.textContent = utils.formatBytes(matchingAsset.size);
+                        }
+                    }
+                }
+            });
         },
 
         startCounterAnimations() {
