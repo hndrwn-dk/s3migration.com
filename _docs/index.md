@@ -16,6 +16,7 @@ Ready to get started? Follow these steps:
 1. **[Install S3 Migration Scheduler]({{ '/docs/installation/' | relative_url }})** - Choose your platform
 2. **[Run Your First Migration]({{ '/docs/quick-start/' | relative_url }})** - Complete walkthrough
 3. **[Download Latest Release]({{ '/downloads/' | relative_url }})** - Get the software
+4. **[Troubleshooting Guide]({{ '/docs/troubleshooting/' | relative_url }})** - Common issues and solutions
 
 ## What is S3 Migration Scheduler?
 
@@ -102,4 +103,5 @@ Ready to dive deeper?
 
 1. **[Installation Guide]({{ '/docs/installation/' | relative_url }})** - Detailed setup instructions
 2. **[Quick Start Guide]({{ '/docs/quick-start/' | relative_url }})** - Step-by-step tutorial
-3. **[Download Software]({{ '/downloads/' | relative_url }})** - Get the latest version
+3. **[Troubleshooting Guide]({{ '/docs/troubleshooting/' | relative_url }})** - Common issues and solutions
+4. **[Download Software]({{ '/downloads/' | relative_url }})** - Get the latest version
