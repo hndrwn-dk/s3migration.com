@@ -326,17 +326,24 @@
     // Platform detection and download links
     const platformDetection = {
         init() {
-            const platform = utils.detectPlatform();
-            this.showDetectedPlatform(platform);
-            this.setupPlatformDownloads(platform);
+            const platformInfo = utils.detectPlatform();
+            this.showDetectedPlatform(platformInfo);
+            this.setupPlatformDownloads(platformInfo);
         },
 
         showDetectedPlatform(platformInfo) {
+            console.log('Platform detection:', platformInfo); // Debug log
+            
             const detectionElement = document.getElementById('platform-detection');
             const platformTextElement = document.getElementById('detected-platform-text');
             const smartDownloadElement = document.getElementById('smart-download');
 
-            if (!detectionElement || platformInfo.os === 'unknown') return;
+            console.log('Detection elements:', { detectionElement, platformTextElement, smartDownloadElement }); // Debug log
+
+            if (!detectionElement || platformInfo.os === 'unknown') {
+                console.log('Not showing detection - element missing or unknown OS'); // Debug log
+                return;
+            }
 
             const platformNames = {
                 windows: 'Windows',
@@ -350,6 +357,7 @@
             if (platformTextElement) platformTextElement.textContent = fullPlatformText;
             
             detectionElement.style.display = 'block';
+            console.log('Platform detection banner shown:', fullPlatformText); // Debug log
 
             // Set up smart download link
             if (smartDownloadElement) {
