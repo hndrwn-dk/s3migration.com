@@ -32,7 +32,7 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
         },
 
-        // Detect user's platform and architecture
+        // Detect user's platform and architecture with improved accuracy
         detectPlatform: () => {
             const userAgent = navigator.userAgent.toLowerCase();
             const platform = navigator.platform.toLowerCase();
@@ -40,40 +40,80 @@
             // Detect OS
             let os = 'unknown';
             let arch = 'unknown';
+            let recommendedDownload = null;
             
             if (userAgent.includes('win') || platform.includes('win')) {
                 os = 'windows';
-                // Detect Windows architecture
-                if (userAgent.includes('win64') || userAgent.includes('x64') || userAgent.includes('amd64')) {
-                    arch = 'x64';
-                } else if (userAgent.includes('arm64') || userAgent.includes('aarch64')) {
+                
+                // Improved Windows architecture detection
+                // Check multiple indicators for 64-bit
+                const is64bit = 
+                    userAgent.includes('win64') ||
+                    userAgent.includes('x64') ||
+                    userAgent.includes('amd64') ||
+                    userAgent.includes('wow64') ||
+                    platform.includes('win64') ||
+                    platform.includes('x64') ||
+                    // Modern browsers on 64-bit systems
+                    (userAgent.includes('chrome') && !userAgent.includes('wow64')) ||
+                    (userAgent.includes('firefox') && userAgent.includes('win64')) ||
+                    // Navigator properties that indicate 64-bit
+                    navigator.maxTouchPoints > 0 || // Touch support usually indicates modern 64-bit
+                    screen.width >= 1920; // High resolution usually indicates 64-bit systems
+                
+                const isARM = userAgent.includes('arm64') || userAgent.includes('aarch64');
+                
+                if (isARM) {
                     arch = 'arm64';
+                    recommendedDownload = 'https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest';
+                } else if (is64bit) {
+                    arch = 'x64';
+                    recommendedDownload = 'https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0-win-x64.exe';
                 } else {
                     arch = 'x86';
+                    recommendedDownload = 'https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest';
                 }
+                
             } else if (userAgent.includes('mac') || platform.includes('mac')) {
                 os = 'macos';
                 if (userAgent.includes('intel')) {
                     arch = 'intel';
-                } else if (userAgent.includes('arm') || userAgent.includes('apple silicon')) {
+                } else if (userAgent.includes('arm') || userAgent.includes('apple silicon') || platform.includes('arm')) {
                     arch = 'apple-silicon';
                 } else {
                     arch = 'universal';
                 }
+                recommendedDownload = 'https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest';
+                
             } else if (userAgent.includes('linux') || platform.includes('linux')) {
                 os = 'linux';
-                if (userAgent.includes('x86_64') || userAgent.includes('amd64')) {
-                    arch = 'x64';
-                } else if (userAgent.includes('arm64') || userAgent.includes('aarch64')) {
+                
+                // Linux architecture detection
+                const is64bit = 
+                    userAgent.includes('x86_64') ||
+                    userAgent.includes('amd64') ||
+                    platform.includes('x86_64') ||
+                    !userAgent.includes('i386') && !userAgent.includes('i686'); // Assume 64-bit if no 32-bit indicators
+                
+                if (userAgent.includes('arm64') || userAgent.includes('aarch64')) {
                     arch = 'arm64';
                 } else if (userAgent.includes('arm')) {
                     arch = 'arm';
+                } else if (is64bit) {
+                    arch = 'x64';
                 } else {
-                    arch = 'x64'; // Default assumption for Linux
+                    arch = 'x86';
                 }
+                
+                recommendedDownload = 'https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0.AppImage';
             }
             
-            return { os, arch, display: `${os} (${arch})` };
+            return { 
+                os, 
+                arch, 
+                display: `${os} (${arch})`,
+                recommendedDownload
+            };
         },
 
         // Cache management
@@ -320,13 +360,23 @@
             }
         },
 
-        setupPlatformDownloads(detectedPlatform) {
-            // Highlight detected platform
-            const platformElements = document.querySelectorAll(`#download-${detectedPlatform}, #download-${detectedPlatform}-main`);
+        setupPlatformDownloads(platformInfo) {
+            // Highlight detected platform section
+            const platformElements = document.querySelectorAll(`#${platformInfo.os}`);
             platformElements.forEach(el => {
-                if (el) el.classList.add('highlighted');
+                if (el) el.classList.add('detected-platform');
             });
         },
+
+        downloadForPlatform(platformInfo) {
+            // Use the recommended download URL if available
+            if (platformInfo.recommendedDownload) {
+                window.open(platformInfo.recommendedDownload, '_blank');
+            } else {
+                // Fallback to releases page
+                window.open('https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest', '_blank');
+            }
+        }
 
 
 
