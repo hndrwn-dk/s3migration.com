@@ -170,6 +170,51 @@
                 console.error('Error fetching contributors:', error);
                 return 1;
             }
+        },
+
+        async fetchCommitCount() {
+            const cacheKey = 'github_commits';
+            const cached = utils.getCache(cacheKey);
+            if (cached) return cached;
+
+            try {
+                // Get the default branch first
+                const repoResponse = await fetch(CONFIG.GITHUB_API);
+                if (!repoResponse.ok) throw new Error('Failed to fetch repo info');
+                const repoData = await repoResponse.json();
+                const defaultBranch = repoData.default_branch;
+
+                // Fetch commits from the default branch with pagination
+                const response = await fetch(`${CONFIG.GITHUB_API}/commits?sha=${defaultBranch}&per_page=1`);
+                if (!response.ok) throw new Error('Failed to fetch commits');
+                
+                // Get total count from Link header
+                const linkHeader = response.headers.get('Link');
+                let totalCommits = 0;
+                
+                if (linkHeader) {
+                    const match = linkHeader.match(/page=(\d+)>; rel="last"/);
+                    if (match) {
+                        totalCommits = parseInt(match[1]);
+                    }
+                }
+                
+                // If no Link header, try a different approach
+                if (totalCommits === 0) {
+                    // Fallback: get a reasonable estimate by checking recent commits
+                    const commitsResponse = await fetch(`${CONFIG.GITHUB_API}/commits?sha=${defaultBranch}&per_page=100`);
+                    if (commitsResponse.ok) {
+                        const commits = await commitsResponse.json();
+                        totalCommits = commits.length >= 100 ? 100 : commits.length;
+                    }
+                }
+                
+                utils.setCache(cacheKey, totalCommits);
+                return totalCommits;
+            } catch (error) {
+                console.error('Error fetching commit count:', error);
+                return 50; // Fallback number
+            }
         }
     };
 
@@ -249,6 +294,16 @@
 
         async downloadForPlatform(platform) {
             try {
+                // First check if we have a cached download URL from updateDownloadLinks
+                const mainLink = document.getElementById(`download-${platform}-main`);
+                const cachedUrl = mainLink ? mainLink.getAttribute('data-download-url') : null;
+                
+                if (cachedUrl) {
+                    window.open(cachedUrl, '_blank');
+                    return;
+                }
+
+                // Fallback: fetch latest release and find platform assets
                 const release = await github.fetchLatestRelease();
                 const platformAssets = this.getPlatformAssets(release.assets, platform);
                 
@@ -404,6 +459,13 @@
                     contributorsElement.textContent = contributors;
                 }
 
+                // Update commit count
+                const commitCount = await github.fetchCommitCount();
+                const commitsElement = document.getElementById('commits-count');
+                if (commitsElement) {
+                    commitsElement.textContent = utils.formatNumber(commitCount);
+                }
+
                 // Update version info
                 const versionElements = document.querySelectorAll('#latest-version, #desktop-version, #release-version');
                 versionElements.forEach(el => {
@@ -461,10 +523,11 @@
                 );
 
                 if (platformAssets.length > 0) {
-                    // Update main download links
+                    // Update main download links - they now use onclick handlers
                     const mainLink = document.getElementById(`download-${platform}-main`);
                     if (mainLink) {
-                        mainLink.href = platformAssets[0].download_url;
+                        // Store the download URL as a data attribute for the onclick handler to use
+                        mainLink.setAttribute('data-download-url', platformAssets[0].download_url);
                     }
 
                     // Update detailed download section
