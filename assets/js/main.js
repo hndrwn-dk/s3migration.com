@@ -292,33 +292,7 @@
             });
         },
 
-        async downloadForPlatform(platform) {
-            try {
-                // First check if we have a cached download URL from updateDownloadLinks
-                const mainLink = document.getElementById(`download-${platform}-main`);
-                const cachedUrl = mainLink ? mainLink.getAttribute('data-download-url') : null;
-                
-                if (cachedUrl) {
-                    window.open(cachedUrl, '_blank');
-                    return;
-                }
 
-                // Fallback: fetch latest release and find platform assets
-                const release = await github.fetchLatestRelease();
-                const platformAssets = this.getPlatformAssets(release.assets, platform);
-                
-                if (platformAssets.length > 0) {
-                    // Download the first matching asset
-                    window.open(platformAssets[0].download_url, '_blank');
-                } else {
-                    // Fallback to releases page
-                    window.open(release.html_url, '_blank');
-                }
-            } catch (error) {
-                console.error('Error downloading for platform:', error);
-                window.open(`${CONFIG.GITHUB_API.replace('api.', '').replace('repos/', '')}/releases`, '_blank');
-            }
-        },
 
         getPlatformAssets(assets, platform) {
             const patterns = {
@@ -523,11 +497,10 @@
                 );
 
                 if (platformAssets.length > 0) {
-                    // Update main download links - they now use onclick handlers
+                    // Update main download links with direct URLs
                     const mainLink = document.getElementById(`download-${platform}-main`);
                     if (mainLink) {
-                        // Store the download URL as a data attribute for the onclick handler to use
-                        mainLink.setAttribute('data-download-url', platformAssets[0].download_url);
+                        mainLink.href = platformAssets[0].download_url;
                     }
 
                     // Update detailed download section
