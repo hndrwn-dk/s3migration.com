@@ -495,23 +495,35 @@
     // Statistics and counters
     const statistics = {
         async init() {
-            await this.updateGitHubStats();
-            await this.updateDockerStats();
-            this.startCounterAnimations();
+            console.log('Statistics init started'); // Debug log
+            try {
+                await this.updateGitHubStats();
+                await this.updateDockerStats();
+                this.startCounterAnimations();
+                console.log('Statistics init completed'); // Debug log
+            } catch (error) {
+                console.error('Error in statistics init:', error);
+            }
         },
 
         async updateGitHubStats() {
             try {
+                console.log('Updating GitHub stats...'); // Debug log
                 const [repoInfo, release, contributors] = await Promise.all([
                     github.fetchRepoInfo(),
                     github.fetchLatestRelease(),
                     github.fetchContributors()
                 ]);
 
+                console.log('GitHub data received:', { repoInfo, release, contributors }); // Debug log
+
                 // Update star count
                 const starsElement = document.getElementById('github-stars');
                 if (starsElement) {
                     starsElement.textContent = utils.formatNumber(repoInfo.stars);
+                    console.log('Updated stars:', repoInfo.stars); // Debug log
+                } else {
+                    console.log('Stars element not found'); // Debug log
                 }
 
                 // Update download count (sum of all asset downloads)
