@@ -17,25 +17,24 @@ Docker is the fastest way to get started. No installation required, works everyw
 - At least 2GB RAM
 - Network access to your S3 endpoints
 
-### Pull Latest Image
+### Quick Start
 
 ```bash
+# Pull the latest image
 docker pull hndrwn/s3-migration-scheduler:latest
-```
 
-### Run Container
-
-```bash
+# Run the container
 docker run -d \
   --name s3-migration \
   -p 8080:8080 \
   -v s3-migration-data:/app/data \
   hndrwn/s3-migration-scheduler:latest
+
+# Access the web interface
+open http://localhost:8080
 ```
 
-Access the web interface at: http://localhost:8080
-
-### Docker Compose
+### Docker Compose (Production)
 
 Create a `docker-compose.yml` file:
 
@@ -44,11 +43,15 @@ version: '3.8'
 services:
   s3-migration:
     image: hndrwn/s3-migration-scheduler:latest
+    container_name: s3-migration-scheduler
     ports:
       - '8080:8080'
     volumes:
       - ./config:/app/config
       - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - NODE_ENV=production
     restart: unless-stopped
 ```
 
@@ -59,11 +62,14 @@ Run with Docker Compose:
 docker-compose up -d
 
 # View logs
-docker-compose logs -f
+docker-compose logs -f s3-migration
 
 # Stop services
 docker-compose down
 ```
+
+### Docker Hub
+Visit [hndrwn/s3-migration-scheduler](https://hub.docker.com/r/hndrwn/s3-migration-scheduler) on Docker Hub for more information and tags.
 
 ## Desktop Applications {#desktop}
 
@@ -208,10 +214,9 @@ For developers and contributors who want to build from source.
 
 ### Prerequisites
 
-- **Go 1.21** or later
-- **Node.js 18** or later (for web UI)
+- **Node.js 18** or later
+- **npm** or **yarn**
 - **Git**
-- **Make** (optional, but recommended)
 
 ### Build Steps
 
@@ -220,67 +225,40 @@ For developers and contributors who want to build from source.
 git clone https://github.com/hndrwn-dk/s3-migration-scheduler.git
 cd s3-migration-scheduler
 
-# Build the backend
-go mod download
-go build -o bin/s3-migration-scheduler ./cmd/server
-
-# Build the web UI
-cd web
+# Install dependencies
 npm install
-npm run build
-cd ..
 
-# Run the application
-./bin/s3-migration-scheduler
+# Build the application
+npm run build
+
+# Start the application
+npm start
 ```
 
-### Using Make
+The application will be available at http://localhost:8080
+
+### Development Mode
 
 ```bash
-# Build everything
-make build
-
-# Build for specific platform
-make build-linux
-make build-windows
-
-
-# Build Docker image
-make docker-build
-
-# Run tests
-make test
+# Run in development mode with hot reload
+npm run dev
 
 # Clean build artifacts
 make clean
 ```
 
-### Cross-compilation
+### Additional Development Commands
 
 ```bash
-# Build for all platforms
-make build-all
-
-# Build for specific platforms
-GOOS=linux GOARCH=amd64 go build -o bin/s3-migration-scheduler-linux-amd64 ./cmd/server
-GOOS=windows GOARCH=amd64 go build -o bin/s3-migration-scheduler-windows-amd64.exe ./cmd/server
-
-```
-
-### Development Setup
-
-```bash
-# Install development dependencies
-make dev-deps
-
-# Run in development mode (with hot reload)
-make dev
-
-# Run tests with coverage
-make test-coverage
+# Run tests
+npm test
 
 # Run linter
-make lint
+npm run lint
+
+# Clean build artifacts
+npm run clean
+
 ```
 
 ## Verification
