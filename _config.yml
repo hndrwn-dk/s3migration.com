@@ -36,6 +36,9 @@ nav_links:
     url: /downloads/
   - title: Documentation
     url: /docs/
+  - title: Contact
+    url: mailto:contact@s3migration.com
+    external: true
   - title: GitHub
     url: https://github.com/hndrwn-dk/s3-migration-scheduler
     external: true
