@@ -12,45 +12,56 @@ S3 Migration Scheduler is available for all major platforms. Choose the installa
 
 Docker is the fastest way to get started. No installation required, works everywhere Docker runs.
 
-> **Note**: Please verify that the Docker image `hndrwn/s3-migration-scheduler:latest` is available on Docker Hub before proceeding with these instructions.
-
 ### Prerequisites
 - Docker 20.10 or later
 - At least 2GB RAM
 - Network access to your S3 endpoints
 
-### Quick Start
+### Pull Latest Image
 
 ```bash
-# Pull and run from Docker Hub
+docker pull hndrwn/s3-migration-scheduler:latest
+```
+
+### Run Container
+
+```bash
 docker run -d \
-  --name s3-migration-scheduler \
-  -p 5000:5000 \
-  -e NODE_ENV=production \
+  --name s3-migration \
+  -p 8080:8080 \
   -v s3-migration-data:/app/data \
   hndrwn/s3-migration-scheduler:latest
-
-# Access web interface
-open http://localhost:5000
 ```
+
+Access the web interface at: http://localhost:8080
 
 ### Docker Compose
 
+Create a `docker-compose.yml` file:
+
+```yaml
+version: '3.8'
+services:
+  s3-migration:
+    image: hndrwn/s3-migration-scheduler:latest
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+    restart: unless-stopped
+```
+
+Run with Docker Compose:
+
 ```bash
-# Clone repository
-git clone https://github.com/hndrwn-dk/s3-migration-scheduler.git
-cd s3-migration-scheduler/docs/docker
-
-# Start with Docker Compose
+# Start services
 docker-compose up -d
-
-# Check status
-docker-compose ps
 
 # View logs
 docker-compose logs -f
 
-# Stop when done
+# Stop services
 docker-compose down
 ```
 
@@ -61,24 +72,38 @@ Native desktop applications with GUI interface for easy migration management.
 ### Windows {#windows}
 
 #### System Requirements
-- Windows 10 version 1903 or later
-- .NET 6.0 Runtime (included in installer)
+- Windows 10 or later
 - At least 4GB RAM
 - 500MB free disk space
 
+#### Download Options
+
+**Windows Installer (x64)** - Recommended for most users
+```
+https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0-win-x64.exe
+```
+
+**Portable Version (x64)** - No installation required
+```
+https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0-win-x64.exe
+```
+
+Or visit the [Downloads page]({{ '/downloads/' | relative_url }}) for the latest versions.
+
 #### Installation Steps
 
-1. **Download the installer** from the [Downloads page]({{ '/downloads/' | relative_url }})
-2. **Run the installer**
-3. **Follow the setup wizard**
-4. **Launch from Start Menu** or Desktop shortcut
+1. **Download** the Windows installer (.exe) from above
+2. **Run the installer** as Administrator if prompted
+3. **Follow the setup wizard** to complete installation
+4. **Launch** from Start Menu or Desktop shortcut
 
-
-
-#### Configuration Location
+#### Configuration Locations
 - **Settings**: `%APPDATA%\S3MigrationScheduler\config.yml`
 - **Logs**: `%APPDATA%\S3MigrationScheduler\logs\`
 - **Data**: `%APPDATA%\S3MigrationScheduler\data\`
+
+#### Older Windows Platforms
+For Windows 7, 8, or other legacy versions, please check the [GitHub Releases page](https://github.com/hndrwn-dk/s3-migration-scheduler/releases) for compatible versions.
 
 
 
@@ -86,23 +111,44 @@ Native desktop applications with GUI interface for easy migration management.
 
 #### System Requirements
 - Modern Linux distribution (Ubuntu 20.04+, CentOS 8+, etc.)
-- glibc 2.31 or later
 - At least 4GB RAM
 - 500MB free disk space
 
-#### AppImage (Universal)
+#### Download Options
+
+**AppImage (Universal)** - Works on most Linux distributions
+```
+https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0.AppImage
+```
+
+**Debian/Ubuntu (.deb)**
+```
+https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop_1.1.0_amd64.deb
+```
+
+**Red Hat/Fedora (.rpm)**
+```
+https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop-1.1.0.x86_64.rpm
+```
+
+**Tarball (.tar.gz)**
+```
+https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop-1.1.0.tar.gz
+```
+
+#### AppImage Installation
 
 The AppImage format works on most Linux distributions without installation:
 
 ```bash
 # Download AppImage
-wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest/download/S3MigrationScheduler-x86_64.AppImage
+wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0.AppImage
 
 # Make executable
-chmod +x S3MigrationScheduler-x86_64.AppImage
+chmod +x S3.Migration.Scheduler-1.1.0.AppImage
 
 # Run directly
-./S3MigrationScheduler-x86_64.AppImage
+./S3.Migration.Scheduler-1.1.0.AppImage
 
 ```
 

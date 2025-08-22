@@ -22,22 +22,20 @@ Choose your preferred method:
 
 ### Docker (Recommended)
 ```bash
-# Note: Verify Docker image availability before use
+# Pull the latest image
+docker pull hndrwn/s3-migration-scheduler:latest
+
+# Run the container
 docker run -d \
   --name s3-migration \
   -p 8080:8080 \
+  -v s3-migration-data:/app/data \
   hndrwn/s3-migration-scheduler:latest
 ```
 
 ### Desktop Application
 - **Windows**: Start Menu → S3 Migration Scheduler
-- **Linux**: Applications menu or run `s3-migration-scheduler`
-
-### Command Line
-```bash
-# Note: CLI interface is under development
-s3-migration-scheduler --port 8080
-```
+- **Linux**: Launch from Applications menu or run the AppImage/installed binary
 
 ## Step 2: Access the Web Interface
 
@@ -46,7 +44,7 @@ Open your browser and navigate to:
 http://localhost:8080
 ```
 
-You should see the S3 Migration Scheduler dashboard.
+You should see the S3 Migration Scheduler dashboard with the main interface for configuring and monitoring your migrations.
 
 ## Step 3: Configure Your First Migration
 
