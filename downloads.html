@@ -6,24 +6,7 @@ permalink: /downloads/
 ---
 
 <div class="downloads-page">
-    <!-- Platform Detection -->
-    <div class="platform-detection">
-        <div class="detected-platform" id="detected-platform" style="display: none;">
-            <div class="detection-info">
-                <span class="detection-icon">🎯</span>
-                <div>
-                    <strong>Detected Platform:</strong>
-                    <span id="detected-os">Unknown</span>
-                </div>
-            </div>
-            <a href="#" class="btn btn-primary" id="recommended-download">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                </svg>
-                Download for <span id="recommended-platform">Your Platform</span>
-            </a>
-        </div>
-    </div>
+
 
     <!-- Quick Navigation -->
     <div class="quick-nav">
@@ -139,23 +122,34 @@ services:
                         <h4>Windows</h4>
                     </div>
                     <div class="platform-downloads" id="windows-downloads">
-                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest" class="download-item" data-platform="windows-x64" data-asset-pattern="win.*x64.*\.exe$" target="_blank">
+                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0-win-x64.exe" class="download-item" data-platform="windows-x64" target="_blank">
                             <div class="download-info">
                                 <strong>Windows Installer (x64)</strong>
                                 <span class="file-type">.exe</span>
                             </div>
-                            <div class="download-size" data-size-target="windows-x64">-</div>
+                            <div class="download-size">103.4 MB</div>
                         </a>
-                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest" class="download-item" data-platform="windows-portable-x64" data-asset-pattern="portable.*x64.*\.exe$" target="_blank">
+                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0-win-x64.exe" class="download-item" data-platform="windows-portable-x64" target="_blank">
                             <div class="download-info">
                                 <strong>Portable Version (x64)</strong>
                                 <span class="file-type">.exe</span>
                             </div>
-                            <div class="download-size" data-size-target="windows-portable-x64">-</div>
+                            <div class="download-size">113 MB</div>
                         </a>
                     </div>
                     <div class="platform-requirements">
                         <small>Requires Windows 10 or later</small>
+                    </div>
+                    
+                    <!-- Older Windows Platform -->
+                    <div class="older-platform-section">
+                        <div class="older-platform-header">
+                            <h5>Older Windows Platforms</h5>
+                            <p>For Windows 7, 8, or other legacy versions</p>
+                        </div>
+                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases" class="btn btn-outline" target="_blank">
+                            View All Releases on GitHub
+                        </a>
                     </div>
                 </div>
 
@@ -168,33 +162,33 @@ services:
                         <h4>Linux</h4>
                     </div>
                     <div class="platform-downloads" id="linux-downloads">
-                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest" class="download-item" data-platform="linux-appimage" data-asset-pattern="\.AppImage$" target="_blank">
+                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0.AppImage" class="download-item" data-platform="linux-appimage" target="_blank">
                             <div class="download-info">
                                 <strong>AppImage (Universal)</strong>
                                 <span class="file-type">.AppImage</span>
                             </div>
-                            <div class="download-size" data-size-target="linux-appimage">-</div>
+                            <div class="download-size">138.5 MB</div>
                         </a>
-                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest" class="download-item" data-platform="linux-deb" data-asset-pattern="\.deb$" target="_blank">
+                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop_1.1.0_amd64.deb" class="download-item" data-platform="linux-deb" target="_blank">
                             <div class="download-info">
                                 <strong>Debian/Ubuntu</strong>
                                 <span class="file-type">.deb</span>
                             </div>
-                            <div class="download-size" data-size-target="linux-deb">-</div>
+                            <div class="download-size">97.1 MB</div>
                         </a>
-                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest" class="download-item" data-platform="linux-rpm" data-asset-pattern="\.rpm$" target="_blank">
+                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop-1.1.0.x86_64.rpm" class="download-item" data-platform="linux-rpm" target="_blank">
                             <div class="download-info">
                                 <strong>Red Hat/Fedora</strong>
                                 <span class="file-type">.rpm</span>
                             </div>
-                            <div class="download-size" data-size-target="linux-rpm">-</div>
+                            <div class="download-size">98.7 MB</div>
                         </a>
-                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest" class="download-item" data-platform="linux-tar" data-asset-pattern="\.tar\.gz$" target="_blank">
+                        <a href="https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop-1.1.0.tar.gz" class="download-item" data-platform="linux-tar" target="_blank">
                             <div class="download-info">
                                 <strong>Tarball</strong>
                                 <span class="file-type">.tar.gz</span>
                             </div>
-                            <div class="download-size" data-size-target="linux-tar">-</div>
+                            <div class="download-size">146 MB</div>
                         </a>
                     </div>
                     <div class="platform-requirements">
