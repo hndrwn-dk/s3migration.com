@@ -32,12 +32,48 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
         },
 
-        // Detect user's platform
+        // Detect user's platform and architecture
         detectPlatform: () => {
             const userAgent = navigator.userAgent.toLowerCase();
-            if (userAgent.includes('win')) return 'windows';
-            if (userAgent.includes('linux')) return 'linux';
-            return 'unknown';
+            const platform = navigator.platform.toLowerCase();
+            
+            // Detect OS
+            let os = 'unknown';
+            let arch = 'unknown';
+            
+            if (userAgent.includes('win') || platform.includes('win')) {
+                os = 'windows';
+                // Detect Windows architecture
+                if (userAgent.includes('win64') || userAgent.includes('x64') || userAgent.includes('amd64')) {
+                    arch = 'x64';
+                } else if (userAgent.includes('arm64') || userAgent.includes('aarch64')) {
+                    arch = 'arm64';
+                } else {
+                    arch = 'x86';
+                }
+            } else if (userAgent.includes('mac') || platform.includes('mac')) {
+                os = 'macos';
+                if (userAgent.includes('intel')) {
+                    arch = 'intel';
+                } else if (userAgent.includes('arm') || userAgent.includes('apple silicon')) {
+                    arch = 'apple-silicon';
+                } else {
+                    arch = 'universal';
+                }
+            } else if (userAgent.includes('linux') || platform.includes('linux')) {
+                os = 'linux';
+                if (userAgent.includes('x86_64') || userAgent.includes('amd64')) {
+                    arch = 'x64';
+                } else if (userAgent.includes('arm64') || userAgent.includes('aarch64')) {
+                    arch = 'arm64';
+                } else if (userAgent.includes('arm')) {
+                    arch = 'arm';
+                } else {
+                    arch = 'x64'; // Default assumption for Linux
+                }
+            }
+            
+            return { os, arch, display: `${os} (${arch})` };
         },
 
         // Cache management
@@ -255,31 +291,31 @@
             this.setupPlatformDownloads(platform);
         },
 
-        showDetectedPlatform(platform) {
-            const detectedElement = document.getElementById('detected-platform');
-            const osElement = document.getElementById('detected-os');
-            const recommendedElement = document.getElementById('recommended-download');
-            const platformElement = document.getElementById('recommended-platform');
+        showDetectedPlatform(platformInfo) {
+            const detectionElement = document.getElementById('platform-detection');
+            const platformTextElement = document.getElementById('detected-platform-text');
+            const smartDownloadElement = document.getElementById('smart-download');
 
-            if (!detectedElement || platform === 'unknown') return;
+            if (!detectionElement || platformInfo.os === 'unknown') return;
 
             const platformNames = {
                 windows: 'Windows',
-                linux: 'Linux'
+                linux: 'Linux',
+                macos: 'macOS'
             };
 
-            const platformName = platformNames[platform] || 'Unknown';
+            const osName = platformNames[platformInfo.os] || 'Unknown';
+            const fullPlatformText = `${osName} (${platformInfo.arch})`;
             
-            if (osElement) osElement.textContent = platformName;
-            if (platformElement) platformElement.textContent = platformName;
+            if (platformTextElement) platformTextElement.textContent = fullPlatformText;
             
-            detectedElement.style.display = 'block';
+            detectionElement.style.display = 'block';
 
-            // Set up recommended download link
-            if (recommendedElement) {
-                recommendedElement.addEventListener('click', (e) => {
+            // Set up smart download link
+            if (smartDownloadElement) {
+                smartDownloadElement.addEventListener('click', (e) => {
                     e.preventDefault();
-                    this.downloadForPlatform(platform);
+                    this.downloadForPlatform(platformInfo);
                 });
             }
         },
