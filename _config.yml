@@ -1,18 +1,64 @@
+# Site settings
 title: S3 Migration Scheduler
-description: Enterprise S3 Migration Made Simple
+description: Enterprise S3 Migration Made Simple - Open Source, Production Ready
 url: "https://s3migration.com"
 baseurl: ""
 
+# Author/Organization
+author:
+  name: "S3 Migration Team"
+  email: "hendrawandaryono.karso@gmail.com"
+
+# Build settings
 markdown: kramdown
 highlighter: rouge
+theme: minima
 
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Collections
 collections:
   docs:
     output: true
     permalink: /:collection/:name/
 
+# Navigation
+nav_links:
+  - title: Home
+    url: /
+  - title: Features
+    url: /#features
+  - title: Downloads
+    url: /downloads/
+  - title: Documentation
+    url: /docs/
+  - title: Contact
+    url: /contact/
+  - title: GitHub
+    url: https://github.com/hndrwn-dk/s3-migration-scheduler
+    external: true
+
+# GitHub repository info
+github:
+  repository_url: "https://github.com/hndrwn-dk/s3-migration-scheduler"
+  releases_url: "https://api.github.com/repos/hndrwn-dk/s3-migration-scheduler/releases"
+
+# Docker info
+docker:
+  hub_url: "https://hub.docker.com/r/hndrwn/s3-migration-scheduler"
+  image_name: "hndrwn/s3-migration-scheduler"
+
+# Exclude from processing
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
-  - vendor/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
