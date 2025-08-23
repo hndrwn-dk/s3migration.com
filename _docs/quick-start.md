@@ -33,161 +33,75 @@ docker run -d \
 docker pull hndrwn/s3-migration-scheduler:latest
 docker run -d --name s3-migration -p 8080:8080 hndrwn/s3-migration-scheduler:latest
 ```
-
-### Desktop Application
-- **Windows**: Start Menu → S3 Migration Scheduler
-- **Linux**: Launch from Applications menu or run the AppImage/installed binary
-
-## Step 2: Access the Web Interface
-
 Open your browser and navigate to:
 ```
 http://localhost:8080
 ```
 
-You should see the S3 Migration Scheduler dashboard with the main interface for configuring and monitoring your migrations.
+### Windows
+```bash
+Download [latest release] (https://github.com/hndrwn-dk/s3-migration-scheduler/tags) based on your platform
+```
+### Linux
+```bash
+Download [latest release] (https://github.com/hndrwn-dk/s3-migration-scheduler/tags) based on your platform
+```
+Double click 'S3 Migration Scheduler' application,yYou should see the S3 Migration Scheduler dashboard with the main interface for configuring and monitoring your migrations.
 
-## Step 3: Configure Your First Migration
+## Step 2: Configure Your First Migration (CYFM)
 
 ### Using the Web Interface
 
-1. **Click "New Migration"** on the dashboard
-2. **Configure Source Settings**:
+1. **Click "Configure"** on the dashboard
+2. **Click "+ Add S3 Connection"**
+3. **Configure Source Settings**:
    ```
-   Endpoint: https://s3.amazonaws.com
-   Bucket: your-source-bucket
-   Region: us-east-1
+   Alias Name: Your Source S3 Bucket 
+   Endpoint URL: https://s3.amazonaws.com or https://minio.example.com or https://s3-compatible-onpremises.corp.com
    Access Key: AKIA...
    Secret Key: ********
    ```
 
-3. **Configure Destination Settings**:
+4. **Configure Destination Settings**:
    ```
-   Endpoint: https://s3.us-west-2.amazonaws.com
-   Bucket: your-destination-bucket
-   Region: us-west-2
+   Alias Name: Your Destination S3 Bucket 
+   Endpoint URL: https://s3.amazonaws.com or https://minio.example.com or https://s3-compatible-onpremises.corp.com
    Access Key: AKIA...
    Secret Key: ********
    ```
 
-4. **Set Migration Options**:
+5. **Click Test Connection**:
+
+## Step 3: Start Your First Migration (SYFM)
+
+### Using the Web Interface
+
+1. **Click "Migrate"** on the dashboard
+2. **Select Your S3 Source Alias and Source Bucket Name"**
+3. **Select Your S3 Destination Alias and Destination Bucket Name"**
+4. **Click "Show Advanced Option**
    ```
-   Workers: 4
-   Chunk Size: 64MB
-   Verify Checksums: ✓ Enabled
-   Overwrite Existing: ✗ Disabled
+   - Check "Overwrite existing files" to Overwrite files in destination
+   - Check "Remove files from destination that don't exist in source" to Remove files from destination that don't exist in source
+   - Add Exclude Pattern, to exclude files from migration
+   - Select Checksum Algorithm.
+     Valid values are: CRC32,CRC32C,SHA1,SHA256
+   - Check "Preserve attributes" to Maintains file/object attributes and bucket policies/locking configurations
+   - "Enable retry on errors" to Automatically retries failed objects during migration
+   - "Dry run (test mode)" to Simulates the migration without actually transferring files
+   - "Watch for changes" to Continuously monitors source and syncs new/changed files
    ```
 
-### Using Configuration File
-
+5. **Select Your Migration Timing**:
+```
+Start Immediately or Schedule for Later
+```
 Create a `config.yml` file:
+6. **Click Start Migration**
 
-```yaml
-# config.yml
-migrations:
-  - name: "My First Migration"
-    source:
-      endpoint: "https://s3.amazonaws.com"
-      bucket: "your-source-bucket"
-      region: "us-east-1"
-      access_key: "AKIA..."
-      secret_key: "your-secret-key"
-      
-    destination:
-      endpoint: "https://s3.us-west-2.amazonaws.com"
-      bucket: "your-destination-bucket"
-      region: "us-west-2"
-      access_key: "AKIA..."
-      secret_key: "your-secret-key"
-      
-    options:
-      workers: 4
-      chunk_size: "64MB"
-      verify: true
-      overwrite: false
-```
+## Step 4: Monitor Progress
 
-### Using Environment Variables
-
-For Docker deployments, you can use environment variables:
-
-```bash
-docker run -d \
-  --name s3-migration \
-  -p 8080:8080 \
-  -e SOURCE_ENDPOINT="https://s3.amazonaws.com" \
-  -e SOURCE_BUCKET="your-source-bucket" \
-  -e SOURCE_ACCESS_KEY="AKIA..." \
-  -e SOURCE_SECRET_KEY="your-secret-key" \
-  -e DEST_ENDPOINT="https://s3.us-west-2.amazonaws.com" \
-  -e DEST_BUCKET="your-destination-bucket" \
-  -e DEST_ACCESS_KEY="AKIA..." \
-  -e DEST_SECRET_KEY="your-secret-key" \
-  hndrwn/s3-migration-scheduler:latest
-```
-
-## Step 4: Test the Connection
-
-Before starting the migration, test your connections:
-
-### Web Interface
-1. Click **"Test Source Connection"**
-2. Click **"Test Destination Connection"**
-3. Verify both show ✅ **Connected**
-
-### Command Line
-```bash
-# Test source connection
-s3-migration-scheduler test-connection --config config.yml --source
-
-# Test destination connection
-s3-migration-scheduler test-connection --config config.yml --destination
-```
-
-### API
-```bash
-# Test connections via API
-curl -X POST http://localhost:8080/api/test-connection \
-  -H "Content-Type: application/json" \
-  -d '{
-    "endpoint": "https://s3.amazonaws.com",
-    "bucket": "your-source-bucket",
-    "access_key": "AKIA...",
-    "secret_key": "your-secret-key"
-  }'
-```
-
-## Step 5: Start Your First Migration
-
-### Web Interface
-1. Click **"Start Migration"**
-2. Monitor progress in real-time on the dashboard
-3. View detailed logs in the "Logs" tab
-
-### Command Line
-```bash
-# Start migration with config file
-s3-migration-scheduler migrate --config config.yml
-
-# Start migration with CLI flags
-s3-migration-scheduler migrate \
-  --source-endpoint "https://s3.amazonaws.com" \
-  --source-bucket "your-source-bucket" \
-  --dest-endpoint "https://s3.us-west-2.amazonaws.com" \
-  --dest-bucket "your-destination-bucket" \
-  --workers 4
-```
-
-### API
-```bash
-curl -X POST http://localhost:8080/api/migrations \
-  -H "Content-Type: application/json" \
-  -d @config.json
-```
-
-## Step 6: Monitor Progress
-
-### Real-time Dashboard
+### History and Logs Menu
 The web interface provides real-time monitoring:
 
 - **Overall Progress**: Files transferred, remaining, and percentage complete
