@@ -175,46 +175,45 @@ chmod +x S3.Migration.Scheduler-1.1.0.AppImage
 
 # Run directly
 ./S3.Migration.Scheduler-1.1.0.AppImage
-
 ```
 
 #### Debian/Ubuntu (.deb)
-
-**Download**
+```bash
+# Download
 wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop_1.1.0_amd64.deb
 
-**Install**
+# Install
 sudo dpkg -i s3-migration-scheduler-desktop_1.0.0_amd64.deb
 sudo apt-get install -f  # Fix dependencies if needed
 
+# Start the application
 s3-migration-scheduler-desktop
 ```
 
 #### Red Hat/Fedora (.rpm)
 ```bash
-**Download and install
+# Download and install
 wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop-1.1.0.x86_64.rpm
 sudo rpm -i s3-migration-scheduler-desktop-1.1.0.x86_64.rpm
 
-**Or using dnf
+# Or using dnf
 sudo dnf install s3-migration-scheduler-desktop-1.1.0.x86_64.rpm
 
-**Start the application**
+# Start the application
 s3-migration-scheduler-desktop
 ```
 
 #### Tarball (Generic)
-
 ```bash
-**Download and extract**
+# Download and extract
 wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop-1.1.0.tar.gz
 tar -xzf s3-migration-scheduler-desktop-1.1.0.tar.gz
 cd s3-migration-scheduler-desktop
 
-***Run directly and extract
+# Run directly and extract
 ./s3-migration-scheduler-desktop
 
-***ptional: Install system-wide***
+# Optional: Install system-wide
 sudo cp s3-migration-scheduler-desktop.desktop /usr/local/bin/
 sudo cp s3-migration-scheduler-desktop.desktop.app /usr/share/applications/
 sudo cp icons/* /usr/share/icons/hicolor/256x256/apps/
@@ -260,31 +259,6 @@ curl http://localhost:8080/health
   "database": "connected",
   "storage": "accessible"
 }
-```
-
-## Troubleshooting
-
-### Common Issues
-
-#### Permission Denied (Linux)
-```bash
-# Make the binary executable
-chmod +x s3-migration-scheduler
-
-# Or for AppImage
-chmod +x S3MigrationScheduler-x86_64.AppImage
-```
-
-#### Port Already in Use
-```bash
-# Check what's using port 8080
-lsof -i :8080
-
-# Use a different port
-s3-migration-scheduler --port 8081
-
-# Or in Docker
-docker run -p 8081:8080 hndrwn/s3-migration-scheduler:latest
 ```
 
 ### Getting Help
