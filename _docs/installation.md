@@ -8,7 +8,7 @@ description: Install S3 Migration Scheduler on your platform - Docker, Windows, 
 
 S3 Migration Scheduler is available for all major platforms. Choose the installation method that works best for your environment.
 
-## Docker (Recommended) {#docker}
+## Docker {#docker}
 
 Docker is the fastest way to get started. No installation required, works everywhere Docker runs.
 
@@ -40,22 +40,43 @@ Create a `docker-compose.yml` file:
 
 ```yaml
 version: '3.8'
+
 services:
-  s3-migration:
-    image: hndrwn/s3-migration-scheduler:latest
+  s3-migration-scheduler:
+    build:
+      context: ../../
+      dockerfile: Dockerfile
     container_name: s3-migration-scheduler
     ports:
-      - '8080:8080'
+      - "5000:5000"
     volumes:
-      - ./config:/app/config
-      - ./data:/app/data
-      - ./logs:/app/logs
+      - sqlite_data:/app/data
+      - logs_data:/app/logs
     environment:
       - NODE_ENV=production
+      - PORT=5000
+    networks:
+      - s3-migration-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  s3-migration-network:
+    driver: bridge
+
+volumes:
+  sqlite_data:
+    driver: local
+  logs_data:
+    driver: local
 ```
 
-Run with Docker Compose:
+### Run with Docker Compose:
 
 ```bash
 # Start services
@@ -91,7 +112,7 @@ https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.
 
 **Portable Version (x64)** - No installation required
 ```
-https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0-win-x64.exe
+https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/S3.Migration.Scheduler-1.1.0-portable-x64.exe
 ```
 
 Or visit the [Downloads page]({{ '/downloads/' | relative_url }}) for the latest versions.
@@ -110,7 +131,6 @@ Or visit the [Downloads page]({{ '/downloads/' | relative_url }}) for the latest
 
 #### Older Windows Platforms
 For Windows 7, 8, or other legacy versions, please check the [GitHub Releases page](https://github.com/hndrwn-dk/s3-migration-scheduler/releases) for compatible versions.
-
 
 
 ### Linux {#linux}
@@ -160,53 +180,45 @@ chmod +x S3.Migration.Scheduler-1.1.0.AppImage
 
 #### Debian/Ubuntu (.deb)
 
-# Download
-wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest/download/s3-migration-scheduler-desktop_1.0.0_amd64.deb
+**Download**
+wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop_1.1.0_amd64.deb
 
-# Install
+**Install**
 sudo dpkg -i s3-migration-scheduler-desktop_1.0.0_amd64.deb
 sudo apt-get install -f  # Fix dependencies if needed
 
-# Launch from menu or command line
 s3-migration-scheduler-desktop
 ```
 
-
 #### Red Hat/Fedora (.rpm)
-
 ```bash
-# Download and install
-wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest/download/s3-migration-scheduler-x86_64.rpm
-sudo rpm -i s3-migration-scheduler-x86_64.rpm
+**Download and install
+wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop-1.1.0.x86_64.rpm
+sudo rpm -i s3-migration-scheduler-desktop-1.1.0.x86_64.rpm
 
-# Or using dnf
-sudo dnf install s3-migration-scheduler-x86_64.rpm
+**Or using dnf
+sudo dnf install s3-migration-scheduler-desktop-1.1.0.x86_64.rpm
 
-# Start the application
-s3-migration-scheduler
+**Start the application**
+s3-migration-scheduler-desktop
 ```
 
 #### Tarball (Generic)
 
 ```bash
-# Download and extract
-wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest/download/s3-migration-scheduler-linux-x64.tar.gz
-tar -xzf s3-migration-scheduler-linux-x64.tar.gz
-cd s3-migration-scheduler
+**Download and extract**
+wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/download/v1.1.0/s3-migration-scheduler-desktop-1.1.0.tar.gz
+tar -xzf s3-migration-scheduler-desktop-1.1.0.tar.gz
+cd s3-migration-scheduler-desktop
 
-# Run directly
-./s3-migration-scheduler
+***Run directly and extract
+./s3-migration-scheduler-desktop
 
-# Optional: Install system-wide
-sudo cp s3-migration-scheduler /usr/local/bin/
-sudo cp s3-migration-scheduler.desktop /usr/share/applications/
+***ptional: Install system-wide***
+sudo cp s3-migration-scheduler-desktop.desktop /usr/local/bin/
+sudo cp s3-migration-scheduler-desktop.desktop.app /usr/share/applications/
 sudo cp icons/* /usr/share/icons/hicolor/256x256/apps/
 ```
-
-#### Configuration Location
-- **Settings**: `~/.config/s3-migration-scheduler/config.yml`
-- **Logs**: `~/.local/share/s3-migration-scheduler/logs/`
-- **Data**: `~/.local/share/s3-migration-scheduler/data/`
 
 ## Build from Source {#source}
 
@@ -233,48 +245,6 @@ npm run build
 
 # Start the application
 npm start
-```
-
-The application will be available at http://localhost:8080
-
-### Development Mode
-
-```bash
-# Run in development mode with hot reload
-npm run dev
-
-# Clean build artifacts
-make clean
-```
-
-### Additional Development Commands
-
-```bash
-# Run tests
-npm test
-
-# Run linter
-npm run lint
-
-# Clean build artifacts
-npm run clean
-
-```
-
-## Verification
-
-After installation, verify that S3 Migration Scheduler is working correctly:
-
-### Check Version
-```bash
-# Command line
-s3-migration-scheduler --version
-
-# Docker
-docker run --rm hndrwn/s3-migration-scheduler:latest --version
-
-# Web interface
-curl http://localhost:8080/api/version
 ```
 
 ### Health Check
@@ -315,19 +285,6 @@ s3-migration-scheduler --port 8081
 
 # Or in Docker
 docker run -p 8081:8080 hndrwn/s3-migration-scheduler:latest
-```
-
-#### Missing Dependencies (Linux)
-```bash
-# Ubuntu/Debian
-sudo apt-get update
-sudo apt-get install libc6 libgcc1 libstdc++6
-
-# CentOS/RHEL
-sudo yum install glibc libgcc libstdc++
-
-# Or use the static binary
-wget https://github.com/hndrwn-dk/s3-migration-scheduler/releases/latest/download/s3-migration-scheduler-linux-static
 ```
 
 ### Getting Help
