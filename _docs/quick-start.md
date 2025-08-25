@@ -46,7 +46,7 @@ Download [latest release] (https://github.com/hndrwn-dk/s3-migration-scheduler/t
 ```bash
 Download [latest release] (https://github.com/hndrwn-dk/s3-migration-scheduler/tags) based on your platform
 ```
-Double click 'S3 Migration Scheduler' application,yYou should see the S3 Migration Scheduler dashboard with the main interface for configuring and monitoring your migrations.
+Double click 'S3 Migration Scheduler' application, You should see the S3 Migration Scheduler dashboard with the main interface for configuring and monitoring your migrations.
 
 ## Step 2: Configure Your First Migration (CYFM)
 
