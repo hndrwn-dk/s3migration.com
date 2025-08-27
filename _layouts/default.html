@@ -8,7 +8,16 @@
     
     <!-- SEO -->
     {% seo %}
-    
+    <!-- Google tag (gtag.js) -->
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-846NEFH607"></script>
+     <script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+
+       gtag('config', 'G-846NEFH607');
+    </script>
+
     <!-- Styles -->
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
