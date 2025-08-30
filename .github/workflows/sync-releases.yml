@@ -157,14 +157,18 @@ jobs:
           fi
           
           # Create release in website repository
+          cat > release_notes.txt << EOF
+          Website updated to reflect release ${{ steps.get_release.outputs.release_tag }} from the main repository.
+
+          Main Repository Release: ${{ steps.get_release.outputs.release_url }}
+
+          Changes:
+          ${{ steps.get_release.outputs.release_body }}
+          EOF
+          
           gh release create "${{ steps.get_release.outputs.release_tag }}" \
             --title "Website Update: ${{ steps.get_release.outputs.release_name }}" \
-            --notes "Website updated to reflect release ${{ steps.get_release.outputs.release_tag }} from the main repository.
-
-          **Main Repository Release**: ${{ steps.get_release.outputs.release_url }}
-
-          ### Changes
-          ${{ steps.get_release.outputs.release_body }}"
+            --notes-file release_notes.txt
 
   # Trigger website rebuild after sync
   rebuild-site:
