@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://s3migration.com/sitemap.xml
+
+# Crawl-delay (optional, in seconds)
+Crawl-delay: 1
+
+# Disallow common paths that don't need indexing
+Disallow: /assets/
+Disallow: /_site/
+Disallow: /.git/
+Disallow: /.github/
+
+# Allow important pages
+Allow: /docs/
+Allow: /downloads/
+Allow: /contact/
