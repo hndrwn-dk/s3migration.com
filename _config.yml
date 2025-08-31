@@ -9,6 +9,9 @@ author:
   name: "S3 Migration Team"
   email: "hendrawandaryono.karso@gmail.com"
 
+# Repository (required for GitHub Pages)
+repository: hndrwn-dk/s3migration.com
+
 # Build settings
 markdown: kramdown
 highlighter: rouge
