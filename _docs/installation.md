@@ -25,13 +25,16 @@ docker pull hndrwn/s3-migration-scheduler:latest
 
 # Run the container
 docker run -d \
-  --name s3-migration \
-  -p 8080:8080 \
+  --name s3-migration-scheduler \
+  -p 5000:5000 \
+  -e NODE_ENV=production \
   -v s3-migration-data:/app/data \
+  -v s3-migration-logs:/app/logs \
   hndrwn/s3-migration-scheduler:latest
 
-# Access the web interface
-open http://localhost:8080
+# Access web interface
+open http://localhost:5000
+
 ```
 
 ### Docker Compose (Production)
@@ -39,24 +42,22 @@ open http://localhost:8080
 Create a `docker-compose.yml` file:
 
 ```yaml
-version: '3.8'
-
 services:
   s3-migration-scheduler:
     build:
-      context: ../../
+      context: .
       dockerfile: Dockerfile
     container_name: s3-migration-scheduler
     ports:
       - "5000:5000"
-    volumes:
-      - sqlite_data:/app/data
-      - logs_data:/app/logs
     environment:
       - NODE_ENV=production
       - PORT=5000
-    networks:
-      - s3-migration-network
+      - FRONTEND_URL=http://localhost:5000
+    volumes:
+      # Persist database and logs
+      - ./data:/app/data
+      - ./logs:/app/logs
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
@@ -64,29 +65,34 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - s3-migration-network
 
 networks:
   s3-migration-network:
     driver: bridge
 
 volumes:
-  sqlite_data:
-    driver: local
-  logs_data:
-    driver: local
+  data:
+  logs:
 ```
 
 ### Run with Docker Compose:
-
 ```bash
-# Start services
+# Start the application
 docker-compose up -d
 
-# View logs
-docker-compose logs -f s3-migration
-
-# Stop services
+# Stop the application
 docker-compose down
+
+# Restart the application
+docker-compose restart
+
+# View real-time logs
+docker-compose logs -f
+
+# View logs with timestamps
+docker-compose logs -t
 ```
 
 ### Docker Hub
@@ -100,8 +106,8 @@ Native desktop applications with GUI interface for easy migration management.
 
 #### System Requirements
 - Windows 10 or later
-- At least 4GB RAM
-- 500MB free disk space
+- At least 2GB RAM
+- 1GB free disk space
 
 #### Download Options
 
