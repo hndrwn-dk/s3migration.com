@@ -81,9 +81,27 @@ permalink: /downloads/
                 <div class="command-block">
                     <div class="command-header">
                         <span>Run Container</span>
-                        <button class="copy-button" data-clipboard-text="docker run -d -p 8080:8080 --name s3-migration {{ site.docker.image_name }}:latest">Copy</button>
+                        <button class="copy-button" data-clipboard-text="
+                            docker run -d \
+  --name s3-migration-scheduler \
+  -p 5000:5000 \
+  -e NODE_ENV=production \
+  -v s3-migration-data:/app/data \
+  -v s3-migration-logs:/app/logs \
+  {{ site.docker.image_name }}:latest">Copy</button>
                     </div>
-                    <pre><code>docker run -d -p 8080:8080 --name s3-migration {{ site.docker.image_name }}:latest</code></pre>
+                    <pre><code>
+docker run -d \
+  --name s3-migration-scheduler \
+  -p 5000:5000 \
+  -e NODE_ENV=production \
+  -v s3-migration-data:/app/data \
+  -v s3-migration-logs:/app/logs \
+  {{ site.docker.image_name }}:latest
+
+# Access web interface
+open http://localhost:5000
+</code></pre>
                 </div>
                 
                 <div class="command-block">
