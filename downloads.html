@@ -107,25 +107,16 @@ open http://localhost:5000
                 <div class="command-block">
                     <div class="command-header">
                         <span>Docker Compose</span>
-                        <button class="copy-button" data-clipboard-text="version: '3.8'
-services:
-  s3-migration:
-    image: {{ site.docker.image_name }}:latest
-    ports:
-      - '8080:8080'
-    volumes:
-      - ./config:/app/config
-    restart: unless-stopped">Copy</button>
+                        <button class="copy-button" data-clipboard-text="
+git clone https://github.com/hndrwn-dk/s3-migration-scheduler.git
+cd s3-migration-scheduler
+docker-compose up -d">Copy</button>
                     </div>
-                    <pre><code>version: '3.8'
-services:
-  s3-migration:
-    image: {{ site.docker.image_name }}:latest
-    ports:
-      - '8080:8080'
-    volumes:
-      - ./config:/app/config
-    restart: unless-stopped</code></pre>
+                    <pre><code>
+                        git clone https://github.com/hndrwn-dk/s3-migration-scheduler.git
+cd s3-migration-scheduler
+docker-compose up -d
+                    </code></pre>
                 </div>
             </div>
             
