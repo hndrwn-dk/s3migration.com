@@ -65,3 +65,4 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - README.md
+current_version: "v1.0.1"
